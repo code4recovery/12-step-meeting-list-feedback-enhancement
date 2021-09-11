@@ -60,7 +60,6 @@ function setHeaderDisplay(x) {
 
 function toggleAdditionalInfoDisplay(x, y) {
     var x, y;   // function scope vars
-    //alert(x);
 
     // search for elements just once
     x = document.getElementById(x);
@@ -75,7 +74,8 @@ function toggleAdditionalInfoDisplay(x, y) {
 </script>
 
 <script>
-$(document).ready(function(){
+//jQuery safe mode
+jQuery(document).ready(function( $ ) {
     $("#request-btn-group .btn").click(function(){
         $(this).button('toggle');
     });
@@ -109,9 +109,6 @@ wp_localize_script('tsml_public', 'tsml_map', array(
 	'location_url' => get_permalink($meeting->post_parent),
 	'longitude' => $meeting->longitude,
 ));
-
-$startDate = tsml_format_next_start($meeting);
-$endDate = tsml_format_next_end($meeting);
 
 //adding custom body classes
 add_filter('body_class', 'tsml_body_class');
