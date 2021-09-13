@@ -565,7 +565,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="notes"><?php _e('Notes', '12-step-meeting-list')?></label>
-																<textarea name="content" id="content" rows="7" placeholder="<?php _e('notes are specific to this meeting. For example: Birthday speaker meeting last Saturday of the month.', '12-step-meeting-list')?>"><?php echo $meeting->post_content ?></textarea>
+																<textarea name="content" id="content" rows="7" style="width:100%;" placeholder="<?php _e('notes are specific to this meeting. For example: Birthday speaker meeting last Saturday of the month.', '12-step-meeting-list')?>"><?php echo $meeting->post_content ?></textarea>
 															</div>
 														</div>
 														<div class="meta_form_row row">
@@ -863,7 +863,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="new_notes"><?php _e('Notes', '12-step-meeting-list')?></label>
-																<textarea name="new_content" id="new_content" rows="7" placeholder="<?php _e('notes are specific to this meeting. For example: Birthday speaker meeting last Saturday of the month.', '12-step-meeting-list')?>" ></textarea>
+																<textarea name="new_content" id="new_content" rows="7" style="width:100%;" placeholder="<?php _e('notes are specific to this meeting. For example: Birthday speaker meeting last Saturday of the month.', '12-step-meeting-list')?>" ></textarea>
 															</div>
 														</div>
 														<div class="meta_form_row row">
