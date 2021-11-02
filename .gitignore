@@ -1,0 +1,7 @@
+.svn
+.sass-cache
+node_modules
+.idea
+Dockerfile
+docker-compose.yml
+.vscode
