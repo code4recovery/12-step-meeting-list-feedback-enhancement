@@ -1,11 +1,10 @@
 # 12 Step Meeting List Feedback Enhancement
 
-Contributors: Code for Recovery
-Requires at least: 3.2
-Requires PHP: 5.6
-Tested up to: 5.7.2
-Tested against 12 Step Meeting List Version 3.12
-Stable tag: 3.12.0
+Contributors: Code for Recovery.
+Requires 12 Step Meeting List Version: 3.12.
+Requires PHP: 5.6.
+Tested up to: 5.7.2.
+Stable tag: 3.12.0.
 
 This plugin is designed to enhance the feedback feature of the legacy 12-step-meeting-list plugin found on the Meeting Detail screen. It provides a formatted solution to guide user feedback input, giving a consistent, auditable, and accurate view of what the feedback submitter is wanting added, changed, or removed in the 12 Step Meeting List.
 
