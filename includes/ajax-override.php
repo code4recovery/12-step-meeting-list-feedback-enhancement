@@ -38,8 +38,8 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 		$myTypesArray = $tsml_programs[$tsml_program]['types'];
 
 		
-		//------------------ Start HTML Layout ----------------------
-		$message = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>';
+		//------------------ Start HTML Layout ---------------------- #Fix issue 2
+		$message = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(tsml_sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>';
 		$message .= "<table border='1' style='width:600px;'><tbody>";
 
 		if ( $RequestType === 'new') {
