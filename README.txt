@@ -35,7 +35,7 @@ Like the original feedback feature, this enhanced version requires a website adm
 
 == Changelog ==
 
-= = 3.12 = =
+= = 1.0.0 = =
 * Initial release. 
 * Synchronized and tested against the 3.12 version of the 12 Step Meeting List.
 
