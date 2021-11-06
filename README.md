@@ -1,7 +1,7 @@
 # 12 Step Meeting List Feedback Enhancement
 
 Contributors: Code for Recovery.
-Requires 12 Step Meeting List Version: 3.12.
+Requires 12 Step Meeting List Version 3.12 or later.
 Requires PHP: 5.6.
 Tested up to: 5.7.2.
 Stable tag: 1.0.0.

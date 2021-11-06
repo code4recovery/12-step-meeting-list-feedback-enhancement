@@ -28,7 +28,7 @@ Like the original feedback feature, this enhanced version requires a website adm
 
 == Screenshots ==
 
-1. fe_screenshot1.png. Meeting detail page with 'Request a change to this listing' button visible.
+1. fe_screenshot1.png. Meeting detail page normal view with 'Request a change to this listing' button visible.
 1. fe_screenshot2.png. Meeting detail page with enhanced 'Meeting Change Request' visible.
 1. fe_screenshot3.png. Meeting detail page with green 'Request Submission Success' message visible.
 1. fe_screenshot4.png. Example of an enhanced 'Meeting Change Request' feedback email.

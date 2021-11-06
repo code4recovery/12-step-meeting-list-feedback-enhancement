@@ -17,7 +17,7 @@ if (!defined('TSMLFE_CONTACT_EMAIL')) {
 }
 
 if (!defined('TSMLFE_VERSION')) {
-    define('TSMLFE_VERSION', '3.12.0');
+    define('TSMLFE_VERSION', '1.0.0');
 }
 
 if (!defined('TSMLFE_PLUGIN_DIR')) {
