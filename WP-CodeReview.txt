@@ -1,0 +1,116 @@
+There are issues with your plugin code preventing it from being approved immediately. We have pended your submission in order to help you correct all issues so that it may be approved and published.
+
+We ask you read this email in its entirety, address all listed issues, and reply to this email with your corrected code attached (or linked). You have three (3) months to make all corrections, before your plugin will be rejected. Even so, as long as you reply to this email, we will be able to continue with your review and eventually publish your code.
+
+Remember in addition to code quality, security and functionality, we require all plugins adhere to our guidelines. If you have not yet, please read them:
+•	https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
+
+We know it can be long, but you must follow the directions at the end as not doing so will result in your review being delayed. It is required for you to read and reply to these emails, and failure to do so will result in significant delays with your plugin being accepted.
+
+Finally, should you at any time wish to alter your permalink (aka the plugin slug), you must explicitly tell us what you want it to be. Just changing the display name is not sufficient, and we require to you clearly state your desired permalink. Remember, permalinks cannot be altered after approval.
+
+Be aware that you will not be able to submit another plugin while this one is being reviewed.
+
+## Tested Up To Value is Out of Date, Invalid, or Missing
+
+The tested up to value in your plugin is not set to the current version of WordPress. This means your plugin will not show up in searches, as we require plugins to be compatible and documented as tested up to the most recent version of WordPress. 
+
+Please update your readme to show that it is tested up to the most recent version of WordPress. You cannot set it beyond the current version, as that will similarly cause your plugin not to be available on searches.
+
+Example(s) from your plugin:
+
+12-step-meeting-list-feedback-enhancement-main/README.txt:6:Tested up to: 5.7.2
+12-step-meeting-list-feedback-enhancement-main/README.md:6:Tested up to: 5.7.2.
+
+## Data Must be Sanitized, Escaped, and Validated
+
+When you include POST/GET/REQUEST/FILE calls in your plugin, it's important to sanitize, validate, and escape them. The goal here is to prevent a user from accidentally sending trash data through the system, as well as protecting them from potential security issues. 
+
+SANITIZE: Data that is input (either by a user or automatically) must be sanitized as soon as possible. This lessens the possibility of XSS vulnerabilities and MITM attacks where posted data is subverted.
+
+VALIDATE: All data should be validated, no matter what. Even when you sanitize, remember that you don’t want someone putting in ‘dog’ when the only valid values are numbers.
+
+ESCAPE: Data that is output must be escaped properly when it is echo'd, so it can't hijack admin screens. There are many esc_*() functions you can use to make sure you don't show people the wrong data. 
+
+To help you with this, WordPress comes with a number of sanitization and escaping functions. You can read about those here: 
+•	https://developer.wordpress.org/plugins/security/securing-input/
+•	https://developer.wordpress.org/plugins/security/securing-output/
+
+Remember: You must use the most appropriate functions for the context. If you’re sanitizing email, use sanitize_email(), if you’re outputting HTML, use esc_html(), and so on.
+
+An easy mantra here is this:
+
+Sanitize early
+Escape Late
+Always Validate
+
+Clean everything, check everything, escape everything, and never trust the users to always have input sane data. After all, users come from all walks of life.
+
+Example(s) from your plugin:
+
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:42: $message = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(tsml_sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>';
+
+There's no function in your plugin named tsml_sanitize_text_area()
+
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:50: $meeting_id = $_POST['meeting_id'];
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:254: $c_name = str_replace("\'s", "", $_POST['name']);
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:268: $chg_typesDescArray = $_POST['types'];
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:503: $new_typesDescArray = $_POST['new_types'];
+12-step-meeting-list-feedback-enhancement-main/includes/ajax-override.php:509: $new_typesDescArray = array_values(array_diff($_POST['new_types'], array('ONL')));
+
+## Variables and options must be escaped when echo'd
+
+Much related to sanitizing everything, all variables that are echoed need to be escaped when they're echoed, so it can't hijack users or (worse) admin screens. There are many esc_*() functions you can use to make sure you don't show people the wrong data, as well as some that will allow you to echo HTML safely. 
+
+At this time, we ask you escape all $-variables, options, and any sort of generated data when it is being echoed. That means you should not be escaping when you build a variable, but when you output it at the end. We call this 'escaping late.'
+
+Besides protecting yourself from a possible XSS vulnerability, escaping late makes sure that you're keeping the future you safe. While today your code may be only outputted hardcoded content, that may not be true in the future. By taking the time to properly escape when you echo, you prevent a mistake in the future from becoming a critical security issue.
+
+This remains true of options you've saved to the database. Even if you've properly sanitized when you saved, the tools for sanitizing and escaping aren't interchangeable (except for esc_url(), and yes, we know that's confusing). Sanitizing makes sure it's safe for processing and storing in the database. Escaping makes it safe to output.
+
+Also keep in mind that sometimes a function is echoing when it should really be returning content instead. This is a common mistake when it comes to returning JSON encoded content. Very rarely is that actually something you should be echoing at all. Echoing is because it needs to be on the screen, read by a human. Returning (which is what you would do with an API) can be json encoded, though remember to sanitize when you save to that json object!
+
+There are a number of options to secure all types of content (html, email, etc). Yes, even HTML needs to be properly escaped.
+•	https://developer.wordpress.org/plugins/security/securing-output/
+
+Remember: You must use the most appropriate functions for the context. There is pretty much an option for everything you could echo. Even echoing HTML safely.
+
+Example(s) from your plugin:
+
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:143: <h1><?php echo $meeting->post_title; </h1>
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:196: echo '<li>' . $li_marker . __('In person', '12-step-meeting-list') . '</li>' . PHP_EOL;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:199: echo '<li>' . $li_marker . __('In person', '12-step-meeting-list') . '</li>' . PHP_EOL;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:200: echo '<li>' . $li_marker . __('Online', '12-step-meeting-list') . '</li>' . PHP_EOL;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:203: echo '<li>' . $li_marker . __('Online', '12-step-meeting-list') . '</li>' . PHP_EOL;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:206: echo '<li>' . $li_marker . __('Temporarily Inactive', '12-step-meeting-list') . '</li>' . PHP_EOL;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:217: <?php echo $li_marker;
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:227: <section><?php echo wpautop($meeting->notes) </section>
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:336: <h3><?php echo empty($meeting->group) ? __('Contact Information', '12-step-meeting-list') : $meeting->group </h3>
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:816: <option value="<?php echo $key "<?php selected(0) ><?php echo $day </option>
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:825: <option value="<?php echo $key "<?php selected(strcmp(@$meeting->time, $key) == 0) ><?php echo $val </option>
+12-step-meeting-list-feedback-enhancement-main/templates/single-meetings.php:834: <option value="<?php echo $key "<?php selected(strcmp(@$meeting->time, $key) == 0) ><?php echo $val </option>
+
+---- ---- ---- ----
+
+We believe this to be a complete review of all issues found in your plugin. If this review is not completed within 3 months (90 days), we will reject this submission in order to keep our queue manageable. 
+
+Your next steps are:
+1.	Make all the corrections related to the issues we listed.
+2.	Review your entire code to ensure there are no other related concerns.
+3.	Attach your corrected plugin as a zip file OR provide a link to a public location (Dropbox, Github, etc) from where we can download the code. A direct link to the zip is best.
+
+Once we receive your updated code, we will re-review it from top down.
+
+Be aware that if your zip contains javascript files, you may not be able to email it as many hosts block that in the interests of security. Keep in mind, all version control directories (like Github) will auto-generate a zip for you, so you do not need to upload a zip file to their systems. You can just link to the repository.
+
+We again remind you that should you wish to alter your permalink (not the display name, the plugin slug), you must explicitly tell us what you want it to be. We require to you clearly state in the body of your email what your desired permalink is. Permalinks cannot be altered after approval, and we generally do not accept requests to rename should you fail to inform us during the review.
+
+If you previously asked for a permalink change and got a reply that is has been processed, you're all good! While these emails will still use the original display name, you don't need to panic. If you did not get a reply that we processed the permalink, let us know immediately.
+
+While we have tried to make this review as exhaustive as possible we, like you, are humans and may have missed things. As such, we will re-review the entire plugin when you send it back to us. We appreciate your patience and understanding.
+
+If you have questions, concerns, or need clarification, please reply to this email and just ask us.
+
+WordPress Plugin Review Team | plugins@wordpress.org
+https://make.wordpress.org/plugins/ 
+https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/ 

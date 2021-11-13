@@ -3,8 +3,8 @@ Contributors: Code for Recovery
 Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12.
-Tested up to: 5.7.2
-Stable tag: 1.0.0
+Tested up to: 5.8.2
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,9 @@ Like the original feedback feature, this enhanced version requires a website adm
 1. fe_screenshot3.png. Meeting detail page with green 'Request Submission Success' message visible.
 1. fe_screenshot4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
-== Changelog ==
+== Chang1log ==
+= = 1.0.1 = =
+* 1st WordPress Review updates.
 
 = = 1.0.0 = =
 * Initial release. 

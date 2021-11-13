@@ -39,15 +39,15 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 		
 		//------------------ Start HTML Layout ---------------------- #Fix issue 2
-		$message = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(tsml_sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>';
-		$message .= "<table border='1' style='width:600px;'><tbody>";
+		$message = esc_html('<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_textarea_field(stripslashes($_POST['tsml_message']))) . '</p>');
+		$message .= esc_html("<table border='1' style='width:600px;'><tbody>");
 
 		if ( $RequestType === 'new') {
 			//break;
 		}
 		else 
 		{
-			$meeting_id = $_POST['meeting_id'];
+			if ( is_numeric( $_POST ['meeting_id'] ) ) { $meeting_id = $_POST['meeting_id']; } else { $meeting_id = 0; }
 			$meeting  = tsml_get_meeting ( intval( $meeting_id ) );
 			$permalink = get_permalink($meeting->ID);
 			$types_string = implode(', ', $meeting->types);
@@ -250,8 +250,8 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_contact_3_email = sanitize_text_field($_POST['contact_3_email']);
 				$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
 
-				$m_name = str_replace("\'s", "", $meeting->post_title );
-				$c_name = str_replace("\'s", "", $_POST['name']);
+				$m_name = str_replace("\'s", "", sanitize_text_field($meeting->post_title ));
+				$c_name = str_replace("\'s", "", sanitize_text_field($_POST['name']));
 				if ( ( strcmp( $m_name, $c_name ) !== 0) ) {
 					$message_lines[__('Meeting', '12-step-meeting-list')] = "<tr><td>Meeting</td><td style='color:red;'>$c_name</td></tr>";  
 					$IsChange = true;
@@ -265,7 +265,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				}
 
 				$chg_typesDescStr = '';
-				$chg_typesDescArray = $_POST['types'];
+				$chg_typesDescArray = sanitize_text_field($_POST['types']);
 				$typesArrayHasChanged = false;
 				if (!empty($_POST['types'])){
 					//if a meeting is both open and closed, make it closed
@@ -470,8 +470,8 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 		if ( $RequestType === 'new') {
 
-			$message  = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>';
-			$message .= "<table border='1' style='width:600px;'><tbody>";
+			$message = esc_html('<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>');
+			$message .= esc_html("<table border='1' style='width:600px;'><tbody>");
 
 			$new_name = stripslashes(sanitize_text_field($_POST['new_name']));
 			$meeting  = tsml_get_meeting();
@@ -500,13 +500,13 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$new_location_notes = sanitize_text_field($_POST['new_location_notes'] );
 			$new_group = sanitize_text_field($_POST['new_group']);
 
-			$new_typesDescArray = $_POST['new_types'];
+			$new_typesDescArray = sanitize_text_field($_POST['new_types']);
 			// If Conference URL, validate; or if phone, force 'ONL' type, else remove 'ONL'
 			if (!empty( $new_conference_url ) ) {
 				$url = esc_url_raw($new_conference_url, array('http', 'https'));
 				if (tsml_conference_provider($url)) {
 					$new_conference_url = $url;
-					$new_typesDescArray = array_values(array_diff($_POST['new_types'], array('ONL')));
+					$new_typesDescArray = array_values(array_diff(sanitize_text_field($_POST['new_types']), array('ONL')));
 				} else {
 					$new_conference_url = null;
 					$new_conference_url_notes = null;
@@ -514,7 +514,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				}
 			} 
 
-			//echo '=====================  New MTG Array   =====================================';
+			// '=====================  New MTG Array   =====================================';
 			$new_typesDescStr = '';
 
 			if ( ( !empty( $new_typesDescArray ) ) && ( is_array( $new_typesDescArray ) ) ) {
@@ -713,7 +713,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 		}
 		elseif (empty($tsml_feedback_addresses) || empty($name) || !is_email($email) || empty($message_lines) ) {
 			_e("<div class='bg-danger text-dark'> Error: required form values missing. Email was not sent.<br></div>", '12-step-meeting-list');
-				echo "Missing Form Input Error...<br>";
+				echo esc_html("Missing Form Input Error...<br>");
 		}
 		elseif (empty($_POST['tsml_message']) && $IsFeedback ) {
 			_e("<div class='bg-danger text-dark'> Error: required Message from feedback form missing. Email was not sent.<br></div>", '12-step-meeting-list');
