@@ -38,9 +38,9 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 		$myTypesArray = $tsml_programs[$tsml_program]['types'];
 
 		
-		//------------------ Start HTML Layout ---------------------- #Fix issue 2
-		$message = esc_html('<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_textarea_field(stripslashes($_POST['tsml_message']))) . '</p>');
-		$message .= esc_html("<table border='1' style='width:600px;'><tbody>");
+		//------------------ Start HTML Layout ---------------------- 
+		$message = '<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_textarea_field(stripslashes($_POST['tsml_message'])) . '</p>');
+		$message .= "<table border='1' style='width:600px;'><tbody>";
 
 		if ( $RequestType === 'new') {
 			//break;
@@ -265,7 +265,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				}
 
 				$chg_typesDescStr = '';
-				$chg_typesDescArray = sanitize_text_field($_POST['types']);
+				$chg_typesDescArray = tsml_sanitize_array($_POST['types']);
 				$typesArrayHasChanged = false;
 				if (!empty($_POST['types'])){
 					//if a meeting is both open and closed, make it closed
@@ -470,7 +470,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 		if ( $RequestType === 'new') {
 
-			$message = esc_html('<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>');
+			$message = esc_html('<p style="padding-bottom: 20px; border-bottom: 2px dashed #ccc; margin-bottom: 20px;">' . nl2br(tsml_sanitize_text_area(stripslashes($_POST['tsml_message']))) . '</p>');
 			$message .= esc_html("<table border='1' style='width:600px;'><tbody>");
 
 			$new_name = stripslashes(sanitize_text_field($_POST['new_name']));
@@ -500,13 +500,13 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$new_location_notes = sanitize_text_field($_POST['new_location_notes'] );
 			$new_group = sanitize_text_field($_POST['new_group']);
 
-			$new_typesDescArray = sanitize_text_field($_POST['new_types']);
+			$new_typesDescArray = tsml_sanitize_array($_POST['new_types']);
 			// If Conference URL, validate; or if phone, force 'ONL' type, else remove 'ONL'
 			if (!empty( $new_conference_url ) ) {
 				$url = esc_url_raw($new_conference_url, array('http', 'https'));
 				if (tsml_conference_provider($url)) {
 					$new_conference_url = $url;
-					$new_typesDescArray = array_values(array_diff(sanitize_text_field($_POST['new_types']), array('ONL')));
+					$new_typesDescArray = array_values(array_diff(tsml_sanitize_array($_POST['new_types']), array('ONL')));
 				} else {
 					$new_conference_url = null;
 					$new_conference_url_notes = null;
@@ -787,5 +787,20 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 		/************************************ EXITl ****************************************/
 		exit;
+	}
+}
+
+//function: sanitize passed array
+//used:		here
+if (!function_exists('tsml_sanitize_array')) {
+	function tsml_sanitize_array($array_to_sanitize) {
+
+		$retArray = array();
+		if (!empty( $array_to_sanitize ) && is_array( $array_to_sanitize ) ) {
+			foreach( $array_to_sanitize as $key => $value ) {
+				$retArray[] = sanitize_text_field( $value );
+			}
+		}
+	return $retArray;
 	}
 }
