@@ -140,7 +140,7 @@ get_header();
 			<div class="col-md-10 col-md-offset-1 main">
 
 				<div class="page-header">
-					<h1><?php echo $meeting->post_title; ?></h1>
+					<h1><?php echo esc_html($meeting->post_title); ?></h1>
 					<?php
 					$meeting_types = tsml_format_types($meeting->types);
 					if (!empty($meeting_types)) {
@@ -188,9 +188,9 @@ get_header();
 									</p>
 									<ul class="meeting-types">
 										<?php
-										$li_marker = '<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										$li_marker = wp_kses_data('<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
-												</svg>';
+												</svg>');
 										switch ($meeting->attendance_option) {
 											case 'in_person':
 												echo '<li>' . $li_marker . __('In person', '12-step-meeting-list') . '</li>' . PHP_EOL;
@@ -224,7 +224,7 @@ get_header();
 									<?php }
 
 									if (!empty($meeting->notes)) { ?>
-										<section class="meeting-notes"><?php echo wpautop($meeting->notes) ?></section>
+										<section class="meeting-notes"><?php echo wpautop(esc_html($meeting->notes)) ?></section>
 									<?php } ?>
 								</li>
 								<?php if (!empty($meeting->conference_url) || !empty($meeting->conference_phone)) { ?>
@@ -234,7 +234,7 @@ get_header();
 										</h3>
 										<?php
 										if (!empty($meeting->conference_url) && $provider = tsml_conference_provider($meeting->conference_url)) { ?>
-											<a class="btn btn-default btn-block" href="<?php echo $meeting->conference_url ?>" target="_blank">
+											<a class="btn btn-default btn-block" href="<?php echo esc_url($meeting->conference_url) ?>" target="_blank">
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M2.667 3.5c-.645 0-1.167.522-1.167 1.167v6.666c0 .645.522 1.167 1.167 1.167h6.666c.645 0 1.167-.522 1.167-1.167V4.667c0-.645-.522-1.167-1.167-1.167H2.667zM.5 4.667C.5 3.47 1.47 2.5 2.667 2.5h6.666c1.197 0 2.167.97 2.167 2.167v6.666c0 1.197-.97 2.167-2.167 2.167H2.667A2.167 2.167 0 0 1 .5 11.333V4.667z" />
 													<path fill-rule="evenodd" d="M11.25 5.65l2.768-1.605a.318.318 0 0 1 .482.263v7.384c0 .228-.26.393-.482.264l-2.767-1.605-.502.865 2.767 1.605c.859.498 1.984-.095 1.984-1.129V4.308c0-1.033-1.125-1.626-1.984-1.128L10.75 4.785l.502.865z" />
@@ -242,18 +242,18 @@ get_header();
 												<?php echo $provider === true ? $meeting->conference_url : sprintf(__('Join with %s', '12-step-meeting-list'), $provider) ?>
 											</a>
 											<?php if ($meeting->conference_url_notes) { ?>
-												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br($meeting->conference_url_notes) ?></p>
+												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br(esc_html($meeting->conference_url_notes)) ?></p>
 											<?php } ?>
 										<?php }
 										if (!empty($meeting->conference_phone)) { ?>
-											<a class="btn btn-default btn-block" href="tel:<?php echo $meeting->conference_phone ?>">
+											<a class="btn btn-default btn-block" href="tel:<?php echo esc_html($meeting->conference_phone) ?>">
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
 												</svg>
 												<?php _e('Join by Phone', '12-step-meeting-list') ?>
 											</a>
 											<?php if ($meeting->conference_phone_notes) { ?>
-												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br($meeting->conference_phone_notes) ?></p>
+												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br(esc_html($meeting->conference_phone_notes)) ?></p>
 											<?php } ?>
 										<?php } ?>
 									</li>
@@ -286,7 +286,7 @@ get_header();
 										foreach ($active_services as $field) {
 											$service = $services[$field];
 											if (!empty($meeting->{$field})) { ?>
-												<a id="<?php echo $field ?>-link" class="btn btn-default btn-block" href="<?php echo $service['url'] . substr($meeting->{$field}, $service['substr']) ?>" target="_blank">
+												<a id="<?php echo esc_html($field) ?>-link" class="btn btn-default btn-block" href="<?php echo $service['url'] . substr($meeting->{$field}, $service['substr']) ?>" target="_blank">
 													<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 														<path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z" />
 														<path fill-rule="evenodd" d="M15 5H1v8h14V5zM1 4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H1z" />
@@ -333,34 +333,34 @@ get_header();
 
 								if (!empty($meeting->group) || !empty($meeting->website) || !empty($meeting->website_2) || !empty($meeting->email) || !empty($meeting->phone) || $hasContactInformation) { ?>
 									<li class="list-group-item list-group-item-group">
-										<h3 class="list-group-item-heading"><?php echo empty($meeting->group) ? __('Contact Information', '12-step-meeting-list') : $meeting->group ?></h3>
+										<h3 class="list-group-item-heading"><?php echo esc_html( empty($meeting->group) ? __('Contact Information', '12-step-meeting-list') : $meeting->group) ?></h3>
 										<?php
 										if (!empty($meeting->group_notes)) { ?>
-											<section class="group-notes"><?php echo wpautop($meeting->group_notes) ?></section>
+											<section class="group-notes"><?php echo wpautop(esc_html($meeting->group_notes)) ?></section>
 										<?php }
 										if (!empty($meeting->district)) { ?>
-											<section class="group-district"><?php echo $meeting->district ?></section>
+											<section class="group-district"><?php echo esc_html($meeting->district) ?></section>
 										<?php }
 										if (!empty($meeting->website)) { ?>
-											<a href="<?php echo $meeting->website ?>" class="btn btn-default btn-block group-website" target="_blank">
+											<a href="<?php echo  esc_html($meeting->website) ?>" class="btn btn-default btn-block group-website" target="_blank">
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
 													<path d="M5.712 6.96l.167-.167a1.99 1.99 0 0 1 .896-.518 1.99 1.99 0 0 1 .518-.896l.167-.167A3.004 3.004 0 0 0 6 5.499c-.22.46-.316.963-.288 1.46z" />
 													<path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
 													<path d="M10 9.5a2.99 2.99 0 0 0 .288-1.46l-.167.167a1.99 1.99 0 0 1-.896.518 1.99 1.99 0 0 1-.518.896l-.167.167A3.004 3.004 0 0 0 10 9.501z" />
 												</svg>
-												<?php echo substr($meeting->website, strpos($meeting->website, '//') + 2) ?>
+												<?php echo substr(esc_html($meeting->website), strpos( esc_html($meeting->website), '//') + 2) ?>
 											</a>
 										<?php }
 										if (!empty($meeting->website_2)) { ?>
-											<a href="<?php echo $meeting->website_2 ?>" class="btn btn-default btn-block group-website_2" target="_blank">
+											<a href="<?php echo  esc_html($meeting->website_2) ?>" class="btn btn-default btn-block group-website_2" target="_blank">
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
 													<path d="M5.712 6.96l.167-.167a1.99 1.99 0 0 1 .896-.518 1.99 1.99 0 0 1 .518-.896l.167-.167A3.004 3.004 0 0 0 6 5.499c-.22.46-.316.963-.288 1.46z" />
 													<path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
 													<path d="M10 9.5a2.99 2.99 0 0 0 .288-1.46l-.167.167a1.99 1.99 0 0 1-.896.518 1.99 1.99 0 0 1-.518.896l-.167.167A3.004 3.004 0 0 0 10 9.501z" />
 												</svg>
-												<?php echo substr($meeting->website_2, strpos($meeting->website_2, '//') + 2) ?>
+												<?php echo substr( esc_html($meeting->website_2), strpos(esc_html($meeting->website_2), '//') + 2) ?>
 											</a>
 										<?php }
 										if (!empty($meeting->email)) { ?>
@@ -392,7 +392,7 @@ get_header();
 												<?php
 												}
 												if (!empty($meeting->{'contact_' . $i . '_phone'})) { ?>
-													<a href="tel:<?php echo $meeting->{'contact_' . $i . '_phone'} ?>" class="btn btn-default btn-block contact-phone">
+													<a href="tel:<?php echo  esc_html($meeting->{'contact_' . $i . '_phone'}) ?>" class="btn btn-default btn-block contact-phone">
 														<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 															<path fill-rule="evenodd" d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
 														</svg>
@@ -813,7 +813,7 @@ get_header();
 																	<label for="new_day"><?php _e('Day', '12-step-meeting-list')?></label><br />
 																	<select name="new_day" id="new_day">
 																		<?php foreach ($tsml_days as $key => $day) { ?>
-																		<option value="<?php echo $key ?>"<?php selected(0) ?> ><?php echo $day ?></option>
+																		<option value="<?php echo esc_html( $key ) ?>"<?php selected(0) ?> ><?php echo esc_html( $day ) ?></option>
 																		<?php } ?>
 																	</select>
 																</div>
@@ -822,7 +822,7 @@ get_header();
 																	<select name="new_time" id="new_time">
 																		<?php $options = meeting_times_array();
 																		foreach ( $options as $key => $val ) {?>
-																		<option value="<?php echo $key ?>"<?php selected(strcmp(@$meeting->time, $key) == 0)?> ><?php echo $val ?></option>
+																		<option value="<?php echo esc_html( $key ) ?>"<?php selected(strcmp(@$meeting->time, $key) == 0)?> ><?php echo esc_html( $val ) ?></option>
 																		<?php }?>
 																	</select>
 																</div>
@@ -831,7 +831,7 @@ get_header();
 																	<select name="new_end_time" id="new_end_time">
 																		<?php $options = meeting_times_array();
 																		foreach ( $options as $key => $val ) {?>
-																		<option value="<?php echo $key ?>"<?php selected(strcmp(@$meeting->time, $key) == 0)?> ><?php echo $val ?></option>
+																		<option value="<?php echo esc_html( $key ) ?>"<?php selected(strcmp(@$meeting->time, $key) == 0)?> ><?php echo esc_html( $val ) ?></option>
 																		<?php }?>
 																	</select>
 																</div>
@@ -851,8 +851,8 @@ get_header();
 																		?>
 																		<div class="checkbox col-md-6" >
 																			<label>
-																				<input type="checkbox" name="new_types[]" id="$key" value="<?php echo $key ?>" <?php checked(in_array($key, $default_checkbox))?> >
-																				<?php echo $type ?>
+																				<input type="checkbox" name="new_types[]" id="$key" value="<?php echo esc_html( $key ) ?>" <?php checked(in_array($key, $default_checkbox))?> >
+																				<?php echo esc_html( $type ) ?>
 																			</label>
 																		</div>
 																	<?php } ?>
