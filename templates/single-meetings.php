@@ -188,22 +188,22 @@ get_header();
 									</p>
 									<ul class="meeting-types">
 										<?php
-										$li_marker = wp_kses_data('<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										$li_marker = ('<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
 												</svg>');
 										switch ($meeting->attendance_option) {
 											case 'in_person':
-												echo '<li>' . $li_marker . __('In person', '12-step-meeting-list') . '</li>' . PHP_EOL;
+												echo '<li>' . $li_marker . esc_textarea(__('In person', '12-step-meeting-list')) . '</li>' . PHP_EOL;
 												break;
 											case 'hybrid':
-												echo '<li>' . $li_marker . __('In person', '12-step-meeting-list') . '</li>' . PHP_EOL;
-												echo '<li>' . $li_marker . __('Online', '12-step-meeting-list') . '</li>' . PHP_EOL;
+												echo '<li>' . $li_marker . esc_textarea(__('In person', '12-step-meeting-list')) . '</li>' . PHP_EOL;
+												echo '<li>' . $li_marker . esc_textarea(__('Online', '12-step-meeting-list')) . '</li>' . PHP_EOL;
 												break;
 											case 'online':
-												echo '<li>' . $li_marker . __('Online', '12-step-meeting-list') . '</li>' . PHP_EOL;
+												echo '<li>' . $li_marker . esc_textarea(__('Online', '12-step-meeting-list')) . '</li>' . PHP_EOL;
 												break;
 											case 'inactive':
-												echo '<li>' . $li_marker . __('Temporarily Inactive', '12-step-meeting-list') . '</li>' . PHP_EOL;
+												echo '<li>' . $li_marker . esc_textarea(__('Temporarily Inactive', '12-step-meeting-list')) . '</li>' . PHP_EOL;
 												break;
 											default:
 												break;
@@ -215,7 +215,7 @@ get_header();
 										<?php foreach ($meeting->types_expanded as $type) { ?>
 											<li>
 												<?php echo $li_marker;
-												_e($type, '12-step-meeting-list'); ?>
+												esc_textarea(_e($type, '12-step-meeting-list')); ?>
 											</li>
 										<?php } ?>
 									</ul>
@@ -466,7 +466,7 @@ get_header();
 						if ( !empty($tsml_feedback_addresses) && $tsml_feedback_method == 'enhanced') {?>
 							<form id="feedback">
 								<input type="hidden" name="action" value="tsml_feedback">
-								<input type="hidden" name="meeting_id" value="<?php echo $meeting->ID ?>">
+								<input type="hidden" name="meeting_id" value="<?php echo preg_replace('/[^0-9]+/', '', $meeting->ID); ?>">
 								<?php wp_nonce_field($tsml_nonce, 'tsml_nonce', false)?>
 
 									<!-- ************************** Request Form Header starts here ************************** -->
