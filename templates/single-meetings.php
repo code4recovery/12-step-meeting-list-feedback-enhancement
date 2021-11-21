@@ -435,7 +435,7 @@ get_header();
 											<center><h3 id="anmrf_title" style="display:none;" >Add New Meeting Request</h3></center>
 										</li>
 										<li class="list-group-item list-group-item-form text-justify" style="padding:20px;" >
-											<?php esc_attr_e('Use this form to send your meeting information to our website administrator. Toggle the Change, New, or Remove buttons to generate a specific type of update request to suit your needs. Groups may register with this website by providing a phone number, email or mailing address for us to contact in the <b>Additional Group Information</b> section.<br><br>Signature Information must be filled in before a request can be submitted.', '12-step-meeting-list-feedback-enhancement')?><br><br>
+											<?php _e(wp_kses_post('Use this form to send your meeting information to our website administrator. Toggle the Change, New, or Remove buttons to generate a specific type of update request to suit your needs. Groups may register with this website by providing a phone number, email or mailing address for us to contact in the <b>Additional Group Information</b> section.<br><br>Signature Information must be filled in before a request can be submitted.'), '12-step-meeting-list-feedback-enhancement')?><br><br>
 										</li>
 										<li class="list-group-item list-group-item-form text-center" >
 											<div id="request-btn-group" class="btn-group btn-group-toggle "data-toggle="buttons">
