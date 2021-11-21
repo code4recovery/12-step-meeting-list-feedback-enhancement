@@ -529,7 +529,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<h4><?php esc_attr_e('Online Meeting Details', '12-step-meeting-list-feedback-enhancement')?></h4>
-																<p><?php echo sprintf(esc_attr__('If this meeting has videoconference information, please enter the full valid URL here. Currently supported providers: %s. If other details are required, such as a password, they can be included in the Notes field above, but a ‘one tap’ experience is ideal. Passwords can be appended to phone numbers using this format <code>+12125551212,,123456789#,,#,,444444#</code>', '12-step-meeting-list-feedback-enhancement'), implode(', ', tsml_conference_providers()))?></p>
+																<p><?php echo sprintf(__(wp_kses_post("If this meeting has videoconference information, please enter the full valid URL here. Currently supported providers: %s. If other details are required, such as a password, they can be included in the Notes field above, but a ‘one tap’ experience is ideal. Passwords can be appended to phone numbers using this format <code>+12125551212,,123456789#,,#,,444444#</code>"), '12-step-meeting-list-feedback-enhancement'), implode(', ', tsml_conference_providers()))?></p>
 															</div>
 														</div>
 														<div class="meta_form_row row">
