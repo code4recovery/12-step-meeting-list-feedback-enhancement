@@ -15,7 +15,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 		$RequestType = "feedback";
 
 		// Determine Request Type 
-		if ( isset( $_POST['submit'] ) ) {	$RequestType = $_POST['submit']; } 
+		if ( isset( $_POST['submit'] ) ) {	$RequestType = sanitize_text_field($_POST['submit']); } 
 
 		if ( isset( $_POST['submit'] ) && ( $_POST['submit'] === 'change') ) {
 				$IsChange = true; // prove in the Change Processing that there really is a change
@@ -47,16 +47,16 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 		}
 		else 
 		{
-			if ( is_numeric( $_POST ['meeting_id'] ) ) { $meeting_id = $_POST['meeting_id']; } else { $meeting_id = 0; }
+			if ( is_numeric( $_POST ['meeting_id'] ) ) { $meeting_id = (int)sanitize_text_field($_POST['meeting_id']); } else { $meeting_id = 0; }
 			$meeting  = tsml_get_meeting ( intval( $meeting_id ) );
 			$permalink = get_permalink($meeting->ID);
-			$types_string = implode(', ', $meeting->types);
+			$types_string = implode(', ', tsml_sanitize_array($meeting->types));
 			$post_title = sanitize_text_field($meeting->post_title);
 
 			$daytime = tsml_format_day_and_time( $meeting->day, $meeting->time);
 
 			$typesDescStr = '';
-			$typesDescArray = $meeting->types;
+			$typesDescArray = tsml_sanitize_array($meeting->types);
 			foreach ($typesDescArray as $mtg_key) {
 				$mtg_description = $myTypesArray[$mtg_key];
 				$typesDescStr .= $mtg_description.'<br>';
