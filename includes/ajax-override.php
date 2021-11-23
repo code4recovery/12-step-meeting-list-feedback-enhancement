@@ -217,7 +217,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_day = sanitize_text_field($_POST['day']);
 				$chg_time = sanitize_text_field($_POST['start_time']);
 				$chg_end_time = sanitize_text_field($_POST['end_time']);
-				$chg_types_string = implode(', ', array_filter( $_POST['types'] ) );
+				$chg_types_string = sanitize_text_field(implode(', ', array_filter( $_POST['types'] ) ) );
 				$chg_notes = sanitize_text_field($_POST['content']);
 				$chg_conference_url = sanitize_text_field($_POST['conference_url']);
 				$chg_conference_url_notes = sanitize_text_field($_POST['conference_url_notes']);

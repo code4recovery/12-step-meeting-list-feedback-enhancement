@@ -528,7 +528,7 @@ get_header();
 														</div>
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
-																<h4><?php esc_attr_e('Online Meeting Details', '12-step-meeting-list-feedback-enhancement')?></h4>
+															    <h4><?php esc_attr_e('Online Meeting Details', '12-step-meeting-list-feedback-enhancement') ?></h4>
 																<p><?php echo sprintf(__(wp_kses_post("If this meeting has videoconference information, please enter the full valid URL here. Currently supported providers: %s. If other details are required, such as a password, they can be included in the Notes field above, but a ‘one tap’ experience is ideal. Passwords can be appended to phone numbers using this format <code>+12125551212,,123456789#,,#,,444444#</code>"), '12-step-meeting-list-feedback-enhancement'), implode(', ', tsml_conference_providers()))?></p>
 															</div>
 														</div>
@@ -541,7 +541,7 @@ get_header();
 														<div class="meta_form_row row" style="display:block;" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="conference_url_notes"><?php esc_attr_e('Conference URL Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" name="conference_url_notes" id="conference_url_notes" style="width:100%;" placeholder="<?php esc_textarea('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->conference_url_notes ?>">
+																<input type="text" name="conference_url_notes" id="conference_url_notes" style="width:100%;" placeholder="<?php esc_attr_e('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->conference_url_notes ?>">
 															</div>
 														</div>
 														<div class="meta_form_row row">
@@ -565,7 +565,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="location"><?php esc_attr_e('Location', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" name="location" id="location" style="width:100%;" placeholder="<?php esc_attr_e('building name (i.e. St John Baptist Church)', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_textarea($meeting->location)?>">
+																<input type="text" name="location" id="location" style="width:100%;" placeholder="<?php esc_attr_e('building name (i.e. St John Baptist Church)', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->location)?>">
 															</div>
 														</div>
 														<div class="meta_form_row row">
@@ -661,7 +661,7 @@ get_header();
 															<div class="meta_form_row row">
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="phone"><?php esc_attr_e('Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="phone" id="phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit public number for contacting the group', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '(' . substr( $meeting->phone, 0, 3) . ') ' . substr($meeting->phone,3,3) . '-' . substr($meeting->phone,6) ?>" >
+																	<input type="text" name="phone" id="phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit public number for contacting the group', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->phone ?>" >
 																</div>
 															</div>
 															<div class="meta_form_row row">
@@ -704,7 +704,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="contact_1_phone" id="contact_1_phone" style="width:100%;" value="<?php echo esc_attr($meeting->contact_1_phone) ?>" >
+																	<input type="text" name="contact_1_phone" id="contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_1_phone) ?>" >
 																</div>
 															</div>
 															<div class="meta_form_row row" >
@@ -722,7 +722,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="contact_2_phone" id="contact_2_phone" style="width:100%;" value="<?php echo esc_attr($meeting->contact_2_phone) ?>" >
+																	<input type="text" name="contact_2_phone" id="contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_2_phone) ?>" >
 																</div>
 															</div>
 															<div class="meta_form_row row" >
@@ -740,7 +740,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="contact_3_phone" id="contact_3_phone" style="width:100%;" value="<?php echo esc_attr($meeting->contact_3_phone) ?>" >
+																	<input type="text" name="contact_3_phone" id="contact_3_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_3_phone) ?>" >
 																</div>
 															</div>
 														</div>
@@ -832,20 +832,20 @@ get_header();
 														</div>
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
-																<label for="new_conference_url"><?php esc_attr_e('URL', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="url" name="new_conference_url" id="new_conference_url" style="width:100%;" placeholder=esc_url( "https://zoom.us/j/9999999999?pwd=123456") >
+																<label for="new_conference_url"><?php esc_attr_e('Conference URL', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																<input type="Url" name="new_conference_url" id="new_conference_url" style="width:100%;" placeholder="https://zoom.us/j/9999999999?pwd=1223456" value="<?php echo "" ?>">
 															</div>
 														</div>
 														<div class="meta_form_row row" style="display:block;" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
-																<label for="new_conference_url_notes"><?php esc_attr('URL Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" name="new_conference_url_notes" id="new_conference_url_notes" style="width:100%;" placeholder="<?php esc_attr('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" >
+																<label for="new_conference_url_notes"><?php esc_attr_e('Conference URL Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																<input type="text" name="new_conference_url_notes" id="new_conference_url_notes" style="width:100%;" placeholder="<?php esc_attr_e('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo "" ?>">
 															</div>
 														</div>
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
-																<label for="new_conference_phone"><?php esc_attr('Online Phone #', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" name="new_conference_phone" id="new_conference_phone" style="width:100%;" placeholder="<?php esc_attr('Phone Number for your Online meeting Provider', '12-step-meeting-list-feedback-enhancement')?>" >
+																<label for="new_conference_phone"><?php esc_attr_e('Conference Phone #', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																<input type="text" name="new_conference_phone" id="new_conference_phone" style="width:100%;" placeholder="<?php esc_attr_e('Phone Number for your Online meeting Provider', '12-step-meeting-list-feedback-enhancement')?>" >
 															</div>
 														</div>
 														<div class="meta_form_row row" style="display:block;" > 
@@ -962,7 +962,7 @@ get_header();
 															<div class="meta_form_row row">
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="new_phone"><?php esc_attr_e('Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="new_phone" id="new_phone" style="width:100%;" placeholder=esc_attr_e("group contact number: +18005551212") value="<?php echo '' ?>">
+																	<input type="text" name="new_phone" id="new_phone" style="width:100%;" placeholder="<?php esc_attr("group contact number: +18005551212")?>" value="<?php echo '' ?>">
 																</div>
 															</div>
 															<div class="meta_form_row row">
@@ -1010,7 +1010,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="new_contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" style="width:100%;" value="<?php echo '' ?>">
+																	<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 																</div>
 															</div>
 															<div class="meta_form_row row" >
@@ -1028,7 +1028,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="new_contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" style="width:100%;" value="<?php echo '' ?>">
+																	<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 																</div>
 															</div>
 															<div class="meta_form_row row" >
@@ -1046,7 +1046,7 @@ get_header();
 															<div class="meta_form_row row" >
 																<div class="well well-sm col-md-10 col-md-offset-1 ">
 																	<label for="new_contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" style="width:100%;" value="<?php echo '' ?>">
+																	<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 																</div>
 															</div>
 														</div>
