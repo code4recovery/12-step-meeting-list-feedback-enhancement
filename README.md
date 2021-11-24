@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 12 Step Meeting List Feedback Enhancement
 
 Contributors: Code for Recovery. 
@@ -36,4 +35,3 @@ The enhanced feedback screen remains hidden until activated by a user; only then
 While this plugin has been found to work seamlessly with many themes, it may require some tweaking of your themes stylesheet (styles.css) if the display is not to your liking.
 
 The best way to install this plugin is via [its home page](https://wordpress.org/plugins/12-step-meeting-list-feedback-enhancement/) in the WordPress Plugin Directory.
->>>>>>> a996c407c4fa7944a327ebd6bbe251ae3c7adeaa
