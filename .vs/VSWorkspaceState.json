@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\includes",
+    "\\languages",
     "\\templates"
   ],
+  "SelectedNode": "\\updater.php",
   "PreviewInSolutionExplorer": false
 }

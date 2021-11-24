@@ -1,10 +1,11 @@
 === 12 Step Meeting List Feedback Enhancement ===
 Contributors: Code for Recovery
+Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12.
 Tested up to: 5.8.2
-Stable tag: 1.0.5
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,33 +26,23 @@ This plugin is designed to enhance the feedback feature of the legacy 12-step-me
 
 Like the original feedback feature, this enhanced version requires a website administrator email address be entered in the "User Feedback Emails" field on the Meetings/Import & Settings page before the feedback system will display.
 
+= What version of the 12 Step Meeting List plugin is required? =
+
+Version 3.12 or later.
 
 == Screenshots ==
 
-1. fe_screenshot1.png. Meeting detail page normal view with 'Request a change to this listing' button visible.
-1. fe_screenshot2.png. Meeting detail page with enhanced 'Meeting Change Request' visible.
-1. fe_screenshot3.png. Meeting detail page with green 'Request Submission Success' message visible.
-1. fe_screenshot4.png. Example of an enhanced 'Meeting Change Request' feedback email.
+1. screenshot-1.png. Meeting detail page normal view with 'Request a change to this listing' button visible.
+1. screenshot-2.png. Meeting detail page with enhanced 'Meeting Change Request' visible.
+1. screenshot-3.png. Meeting detail page with green 'Request Submission Success' message visible.
+1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
-== Chang1log ==
+== Changelog ==
 
-= = 1.0.5 = =
-* 5th WordPress Review (sanitize $meeting_id and $RequestType fields (ajax-override.php). Remove WP-CodeReview.txt.
+= 1.0 = 
+* Initial release to WordPress SVN repository. 
 
-= = 1.0.4 = =
-* 4th WordPress Review (fix versioning issues and sanitize types field (ajax-override.php ln 220).
+== Upgrade Notice ==
 
-= = 1.0.3 = =
-* 3rd WordPress Review (add pot file and fix issues).
-
-= = 1.0.2 = =
-* 2nd WordPress Review (sanitize early escape late always validate).
-
-= = 1.0.1 = =
-* 1st WordPress Review required updates.
-
-= = 1.0.0 = =
-* Initial release. 
-* Synchronized and tested against the 3.12 version of the 12 Step Meeting List.
-
-
+= 1.0 =
+* Enhances the '12 Step Meeting List' plugin feedback feature found on the meeting details page.  
