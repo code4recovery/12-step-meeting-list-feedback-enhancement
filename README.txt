@@ -3,9 +3,9 @@ Contributors: Code for Recovery
 Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
-Requires 12 Step Meeting List Version: 3.12.
+Requires 12 Step Meeting List Version: 3.12
 Tested up to: 5.8.2
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ Version 3.12 or later.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.1 = 
+* Added version check of '12 Step Meeting List' plugin during Activation. If version number is less than 3.12 Activation will fail.
 
 = 1.0 = 
 * Initial release to WordPress SVN repository. 
