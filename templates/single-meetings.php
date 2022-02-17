@@ -428,13 +428,13 @@ get_header();
 								<?php wp_nonce_field($tsml_nonce, 'tsml_nonce', false)?>
 
 									<!-- ************************** Request Form Header starts here ************************** -->
-									<ul class="list-group "  >
+									<ul class="list-group " style="margin: 0; list-style-type: none;" >
 										<li class="list-group-item list-group-item-form list-group-item-warning " >
 											<center><h3 id="mcrf_title">Meeting Change Request</h3></center>
 											<center><h3 id="mrrf_title" style="display:none;" >Remove Meeting Request</h3></center>
 											<center><h3 id="anmrf_title" style="display:none;" >Add New Meeting Request</h3></center>
 										</li>
-										<li class="list-group-item list-group-item-form text-justify" style="padding:20px;" >
+										<li class="well well-sm list-group-item list-group-item-form text-left" style="padding:20px;" >
 											<?php _e(wp_kses_post('Use this form to send your meeting information to our website administrator. Toggle the Change, New, or Remove buttons to generate a specific type of update request to suit your needs. Groups may register with this website by providing a phone number, email or mailing address for us to contact in the <b>Additional Group Information</b> section.<br><br>Signature Information must be filled in before a request can be submitted.'), '12-step-meeting-list-feedback-enhancement')?><br><br>
 										</li>
 										<li class="list-group-item list-group-item-form text-center" >
@@ -465,7 +465,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="name"><?php esc_attr_e('Meeting Name', '12-step-meeting-list-feedback-enhancement')?></label>
-																<input type="text" class="required"  name="name" id="name" style="width:100%;" placeholder="<?php esc_attr_e('Enter meeting short name (ie. without the words Group or Meeting...)', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_html($meeting_name); ?>" >
+																<input type="text" class="required"  name="name" id="name" style="width:100%; display:block;" placeholder="<?php esc_attr_e('Enter meeting short name (ie. without the words Group or Meeting...)', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_html($meeting_name); ?>" >
 															</div>
 														</div><br>
 														<div class="meta_form_row row">
@@ -538,7 +538,7 @@ get_header();
 																<input type="Url" name="conference_url" id="conference_url" style="width:100%;" placeholder="https://zoom.us/j/9999999999?pwd=1223456" value="<?php echo $meeting->conference_url ?>">
 															</div>
 														</div>
-														<div class="meta_form_row row" style="display:block;" > 
+														<div class="meta_form_row row" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="conference_url_notes"><?php esc_attr_e('Conference URL Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
 																<input type="text" name="conference_url_notes" id="conference_url_notes" style="width:100%;" placeholder="<?php esc_attr_e('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->conference_url_notes ?>">
@@ -550,7 +550,7 @@ get_header();
 																<input type="text" name="conference_phone" id="conference_phone" style="width:100%;" placeholder="<?php esc_attr_e('Phone Number for your Online meeting Provider', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->conference_phone ?>">
 															</div>
 														</div>
-														<div class="meta_form_row row" style="display:block;" > 
+														<div class="meta_form_row row"> 
 															<div class="well well-sm col-md-10 col-md-offset-1 "><br>
 																<label for="conference_phone_notes"><?php esc_attr_e('Conference Phone Notes', '12-step-meeting-list-feedback-enhancement')?></label><br> 
 																<input type="text" name="conference_phone_notes" id="conference_phone_notes" style="width:100%;" placeholder="<?php esc_attr_e('Info related to joining an online meeting via phone...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->conference_phone_notes ?>">
@@ -576,7 +576,7 @@ get_header();
 														</div>
 														<?php if (wp_count_terms('tsml_region')) {?>
 														<div class="meta_form_row row">
-															<div class="well well-sm col-md-4 col-md-offset-1">
+															<div class="well well-sm col-md-5 col-md-offset-1">
 																
 																<label for="region"><?php esc_attr_e('Region', '12-step-meeting-list-feedback-enhancement')?></label><br />
 																<?php wp_dropdown_categories(array(
@@ -585,7 +585,7 @@ get_header();
 																	'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																))?>
 															</div>		
-															<div class="well well-sm col-md-5 col-md-offset-1">		
+															<div class="well well-sm col-md-5">		
 																<label for="sub_region"><?php esc_attr_e('Sub Region', '12-step-meeting-list-feedback-enhancement')?></label>
 																<input type="text" name="sub_region" id="sub_region" placeholder="<?php esc_attr_e('related to Region...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo 	$meeting->sub_region ?>">
 															</div>
@@ -620,7 +620,7 @@ get_header();
 															</div>
 															<?php if (wp_count_terms('tsml_district')) {?>
 															<div class="meta_form_row row">
-																<div class="well well-sm col-md-2 col-md-offset-1">																
+																<div class="well well-sm col-md-4 col-md-offset-1">																
 																	<label for="district"><?php esc_attr_e('District', '12-step-meeting-list-feedback-enhancement')?></label><br />
 																	<?php wp_dropdown_categories(array(
 																		'name' => 'district', 'taxonomy' => 'tsml_district','hierarchical' => true,  'id' => 'district_id',
@@ -628,8 +628,8 @@ get_header();
 																		'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																	))?>
 																</div>		
-																<div class="well well-sm col-md-7 col-md-offset-1">		
-																	<label for="sub_region"><?php esc_attr_e('Sub District', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																<div class="well well-sm col-md-6 ">		
+																	<label for="sub_district"><?php esc_attr_e('Sub District', '12-step-meeting-list-feedback-enhancement')?></label><br>
 																	<input type="text" name="sub_district" id="sub_district" style="width:100%;" placeholder="<?php esc_attr_e('related to District...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo 	$meeting->sub_district ?>">
 																</div>
 															</div>
@@ -762,7 +762,7 @@ get_header();
 														<div class="meta_form_row row">
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="new_name"><?php esc_attr_e('Meeting Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" class="required"  name="new_name" id="new_name" style="width:100%;" placeholder="<?php esc_attr_e('Enter meeting short name (ie. without the words Group or Meeting...)', '12-step-meeting-list-feedback-enhancement')?>"  >
+																<input type="text" class="required"  name="new_name" id="new_name" style="width:100%; display:block;" placeholder="<?php esc_attr_e('Enter meeting short name (ie. without the words Group or Meeting...)', '12-step-meeting-list-feedback-enhancement')?>"  >
 															</div>
 														</div><br> 
 														<div class="meta_form_row row">
@@ -836,7 +836,7 @@ get_header();
 																<input type="Url" name="new_conference_url" id="new_conference_url" style="width:100%;" placeholder="https://zoom.us/j/9999999999?pwd=1223456" value="<?php echo "" ?>">
 															</div>
 														</div>
-														<div class="meta_form_row row" style="display:block;" > 
+														<div class="meta_form_row row" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="new_conference_url_notes"><?php esc_attr_e('Conference URL Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
 																<input type="text" name="new_conference_url_notes" id="new_conference_url_notes" style="width:100%;" placeholder="<?php esc_attr_e('Password if needed or other info related to joining an online meeting...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo "" ?>">
@@ -848,7 +848,7 @@ get_header();
 																<input type="text" name="new_conference_phone" id="new_conference_phone" style="width:100%;" placeholder="<?php esc_attr_e('Phone Number for your Online meeting Provider', '12-step-meeting-list-feedback-enhancement')?>" >
 															</div>
 														</div>
-														<div class="meta_form_row row" style="display:block;" > 
+														<div class="meta_form_row row" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="new_conference_phone_notes"><?php esc_attr_e('Conference Phone Notes', '12-step-meeting-list-feedback-enhancement')?></label> <br>
 																<input type="text" name="new_conference_phone_notes" id="new_conference_phone_notes" style="width:100%;" placeholder="<?php esc_attr_e('Info related to joining an online meeting via phone...', '12-step-meeting-list-feedback-enhancement')?>" >
@@ -874,7 +874,7 @@ get_header();
 														</div>
 														<?php if (wp_count_terms('tsml_region')) {?>
 														<div class="meta_form_row row">
-															<div class="well well-sm col-md-4 col-md-offset-1">
+															<div class="well well-sm col-md-5 col-md-offset-1">
 																
 																<label for="new_region"><?php esc_attr_e('Region', '12-step-meeting-list-feedback-enhancement')?></label><br />
 																<?php wp_dropdown_categories(array(
@@ -883,13 +883,13 @@ get_header();
 																	'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																))?>
 															</div>		
-															<div class="well well-sm col-md-5 col-md-offset-1">		
+															<div class="well well-sm col-md-5 ">		
 																<label for="new_sub_region"><?php esc_attr_e('Sub Region', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																<input type="text" name="new_sub_region" id="new_sub_region" style="width:100%;" placeholder="<?php esc_attr_e('related to Region...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																<input type="text" name="new_sub_region" id="new_sub_region" placeholder="<?php esc_attr_e('related to Region...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 															</div>
 														</div>
 														<?php }?>
-														<div class="meta_form_row row" style="display:block;" > 
+														<div class="meta_form_row row" > 
 															<div class="well well-sm col-md-10 col-md-offset-1 ">
 																<label for="new_location_notes"><?php esc_attr_e('Location Notes', '12-step-meeting-list-feedback-enhancement')?></label><br>
 																<input type="text" name="new_location_notes" id="new_location_notes" style="width:100%;" placeholder="<?php esc_attr_e('common information that will apply to all meetings at this location', '12-step-meeting-list-feedback-enhancement')?>" >
@@ -921,7 +921,7 @@ get_header();
 															</div>
 															<?php if (wp_count_terms('tsml_district')) {?>
 															<div class="meta_form_row row">
-																<div class="well well-sm col-md-2 col-md-offset-1 ">
+																<div class="well well-sm col-md-4 col-md-offset-1 ">
 																	<label for="new_district"><?php esc_attr_e('District', '12-step-meeting-list-feedback-enhancement')?></label><br>
 																	<?php wp_dropdown_categories(array(
 																		'name' => 'new_district', 'taxonomy' => 'tsml_district','hierarchical' => true, 
@@ -929,7 +929,7 @@ get_header();
 																		'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																	))?>
 																</div>
-																<div class="well well-sm col-md-7 col-md-offset-1 ">
+																<div class="well well-sm col-md-6  ">
 																	<label for="new_sub_district"><?php esc_attr_e('Sub District', '12-step-meeting-list-feedback-enhancement')?></label><br> 
 																	<input type="text" name="new_sub_district" id="new_sub_district" style="width:100%;" placeholder="<?php esc_attr_e('related to district...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 																</div>
@@ -1057,16 +1057,16 @@ get_header();
 											</div> 
 											<div class="clearfix " ></div>
 										</li> 
-										<li class="list-group-item list-group-item-form " >											
+										<li class="list-group list-group-item-form " >											
 											<!-- ************************** Signature Information starts here ************************** -->
-											<div id="divSignature" class="" style="float:left; width:100%;"  >
-												<ul class="list-group-item list-group-item-form ">
+											<div id="divSignature" style="float:left; width:100%; margin: 0; padding: 0;" >
+												<ul class="list-group-item-form" style="margin: 0; padding: 0;" >
 													<li class="list-group-item list-group-item-warning">
 														<h4><?php esc_attr_e('Signature Information', '12-step-meeting-list-feedback-enhancement')?></h4>
 													</li>
-													<li class="list-group-item ">
-														<input type="text" id="tsml_name" name="tsml_name" style="width:100%;" placeholder="<?php esc_attr_e('Your Name', '12-step-meeting-list-feedback-enhancement')?>" class="required">
-														<input type="email" id="tsml_email" name="tsml_email" style="width:100%;" placeholder="<?php esc_attr_e('Email Address', '12-step-meeting-list-feedback-enhancement')?>" class="required email">
+													<li class="list-group-item list-group-item-information">
+														<input type="text" id="tsml_name" name="tsml_name" style="width:100%; display:block;" placeholder="<?php esc_attr_e('Your Name', '12-step-meeting-list-feedback-enhancement')?>" class="required">
+														<input type="email" id="tsml_email" name="tsml_email" style="width:100%; display:block;" placeholder="<?php esc_attr_e('Email Address', '12-step-meeting-list-feedback-enhancement')?>" class="required email">
 														<textarea id="tsml_message" name="tsml_message" rows="7" style="width:100%;" placeholder="<?php esc_attr_e('Your Message', '12-step-meeting-list-feedback-enhancement')?>" ></textarea><br><br>
 														<center><button type="submit" class="btn btn-primary" id="submit_change" name="submit" onclick="return confirm('Are you ready to submit your changes for this meeting?');" style="display:block; " value="change" ><?php esc_attr_e('Submit', '12-step-meeting-list-feedback-enhancement')?></button></center>
 														<center><button type="submit" class="btn btn-primary" id="submit_new" name="submit" onclick="return confirm('Are you ready to send us your new meeting information?');" style="display:none; " value="new" ><?php esc_attr_e('Submit', '12-step-meeting-list-feedback-enhancement')?></button></center>

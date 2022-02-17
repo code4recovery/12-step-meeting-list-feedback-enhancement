@@ -4,8 +4,8 @@ Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12
-Tested up to: 5.8.2
-Stable tag: 1.0.2
+Tested up to: 5.9
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ Version 3.12 or later.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.3 = 
+* Updated CSS and internal styles to display correctly with most themes.
 
 = 1.0.2 = 
 * Removed periods from header which caused invalid header warning on activation when debug mode is on.

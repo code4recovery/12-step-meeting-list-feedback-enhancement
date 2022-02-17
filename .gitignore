@@ -9,3 +9,4 @@ docker-compose.yml
 .suo
 ProjectSettings.json
 VSWorkspaceState.json
+.vs
