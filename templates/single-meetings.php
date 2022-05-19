@@ -1,88 +1,5 @@
-
-<script language='javascript'>
-function switchVisible() {
-    if (document.getElementById('map')) {
-
-        if (document.getElementById('map').style.display == 'none') {
-            document.getElementById('map').style.display = 'block';
-            document.getElementById('requests').style.display = 'none';
-        }
-        else {
-            document.getElementById('map').style.display = 'none';
-            document.getElementById('requests').style.display = 'block';
-        }
-    }
-}
-
-function setHeaderDisplay(x) {
-	var anmrf_title = document.getElementById('anmrf_title');
-	var mcrf_title = document.getElementById('mcrf_title');
-	var mrrf_title = document.getElementById('mrrf_title');
-
-	if (x == 'mrrf_title') {
-		anmrf_title.style.display = 'none';
-		mcrf_title.style.display = 'none';
-		mrrf_title.style.display = 'block';
-
-		document.getElementById('add_new_request').style.display = 'none';
-		document.getElementById('change_request').style.display = 'none';
-
-		document.getElementById('submit_change').style.display = 'none';
-		document.getElementById('submit_new').style.display = 'none';
-		document.getElementById('submit_remove').style.display = 'block';
-
-	} else if (x === 'anmrf_title') {
-		anmrf_title.style.display = 'block';
-		mcrf_title.style.display = 'none';
-		mrrf_title.style.display = 'none';
-
-		document.getElementById('add_new_request').style.display = 'block';
-		document.getElementById('change_request').style.display = 'none';
-
-		document.getElementById('submit_change').style.display = 'none';
-		document.getElementById('submit_new').style.display = 'block';
-		document.getElementById('submit_remove').style.display = 'none';
-
-	} else if (x === 'mcrf_title') {
-		anmrf_title.style.display = 'none';
-		mcrf_title.style.display = 'block';
-		mrrf_title.style.display = 'none';
-
-		document.getElementById('add_new_request').style.display = 'none';
-		document.getElementById('change_request').style.display = 'block';
-
-		document.getElementById('submit_change').style.display = 'block';
-		document.getElementById('submit_new').style.display = 'none';
-		document.getElementById('submit_remove').style.display = 'none';
-
-	}
-}
-
-function toggleAdditionalInfoDisplay(x, y) {
-    var x, y;   // function scope vars
-
-    // search for elements just once
-    x = document.getElementById(x);
-
-    if(y == "show"){
-        x.style.display = "block";
-    }
-    else{
-        x.style.display = "none";
-    }
-}
-</script>
-
-<script>
-//jQuery safe mode
-jQuery(document).ready(function( $ ) {
-    $("#request-btn-group .btn").click(function(){
-        $(this).button('toggle');
-    });
-});
-</script>
-
 <?php
+
 tsml_assets();
 
 $meeting = tsml_get_meeting();
@@ -440,13 +357,13 @@ get_header();
 										<li class="list-group-item list-group-item-form text-center" >
 											<div id="request-btn-group" class="btn-group btn-group-toggle "data-toggle="buttons">
 												<label class="btn btn-primary checked">
-												<input type="checkbox"name="change" checked autocomplete="off" value="change" onclick="setHeaderDisplay('mcrf_title')" > Change
+												<input type="checkbox"name="change" checked autocomplete="off" value="change" onclick="setRequestHeaderDisplay('mcrf_title')" > Change
 												</label>
 												<label class="btn btn-primary">
-												<input type="checkbox" name="new" autocomplete="off" value="new" onclick="setHeaderDisplay('anmrf_title')" > New
+												<input type="checkbox" name="new" autocomplete="off" value="new" onclick="setRequestHeaderDisplay('anmrf_title')" > New
 												</label>
 												<label class="btn btn-primary">
-												<input type="checkbox" name="remove" autocomplete="off" onclick="setHeaderDisplay('mrrf_title')" > Remove
+												<input type="checkbox" name="remove" autocomplete="off" onclick="setRequestHeaderDisplay('mrrf_title')" > Remove
 												</label>	
 											</div>
 										</li> 
