@@ -5,7 +5,7 @@ Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12
 Tested up to: 5.9.3
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ Version 3.12 or later.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.5 = 
+* Add uninstall function.
 
 = 1.0.4 = 
 * Enqueued java script in footer with jquery dependency to resolve bootstrap button issue. Added code for deactivate function to fix deactivation error.
