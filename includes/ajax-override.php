@@ -54,6 +54,10 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$post_title = sanitize_text_field($meeting->post_title);
 
 			$daytime = tsml_format_day_and_time( $meeting->day, $meeting->time);
+			$endtime = '';
+			if (!empty($meeting->end_time)) {
+				$endtime = date("g:i a",strtotime($meeting->end_time)); 
+			}
 
 			$typesDescStr = '';
 			$typesDescArray = tsml_sanitize_array($meeting->types);
@@ -63,12 +67,18 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$typesDescArray[$mtg_key] = $mtg_description;
 			}
 
+			//$result = condition ? value1 : value2;
+			$is_in_person_meeting = in_array('TC', @$meeting->types) || $meeting->attendance_option == 'online' || $meeting->attendance_option == 'inactive' ? 'No' : 'Yes';
+
 			$message_lines = array(
 				__('Requestor', '12-step-meeting-list-feedback-enhancement') =>  "<tr><td>Requestor</td><td>$name <a href='mailto:' $email > $email </a></td></tr>",
 				__('Meeting', '12-step-meeting-list-feedback-enhancement') => "<tr><td>Meeting</td><td><a href='$permalink'> $post_title </a></td></tr>",
 				__('Meeting Id', '12-step-meeting-list-feedback-enhancement') =>  "<tr><td>Meeting Id</td><td>$meeting_id</td></tr>",
 				__('When', '12-step-meeting-list-feedback-enhancement') => "<tr><td>When</td><td>$daytime</td></tr>",
+				__('End Time', '12-step-meeting-list-feedback-enhancement') => "<tr><td>End Time</td><td>$endtime</td></tr>",
+				__('Attend in-person', '12-step-meeting-list-feedback-enhancement') => "<tr><td>Attend in-person</td><td>$is_in_person_meeting</td></tr>",
 			);
+
 
 			if (!empty($meeting->types)) {
 				$message_lines[__('Types', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Types</td><td>$typesDescStr</td></tr>";
@@ -106,10 +116,6 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$message_lines[__('Region', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Region</td><td>$meeting->region</td></tr>";  
 			}
 			
-			if (!empty($meeting->sub_region)) {
-				$message_lines[__('Sub Region', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Region</td><td>$meeting->sub_regioin</td></tr>";  
-			}
-
 			if (!empty($meeting->location_notes)) {
 				$message_lines[__('Location Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Location Notes</td><td>$meeting->location_notes</td></tr>";  
 			}
@@ -124,10 +130,6 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 				if (!empty($meeting->district) && strlen($meeting->district) > 0 ) {
 					$message_lines[__('District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>District</td><td>$meeting->district</td></tr>";  
-				}
-
-				if (!empty($meeting->sub_district)) {
-					$message_lines[__('Sub District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub District</td><td>$meeting->sub_district</td></tr>";  
 				}
 
 				if (!empty($meeting->website)) {
@@ -213,12 +215,28 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 				$IsChange = false; // must prove to be real change
 
-				$chg_name = stripslashes(sanitize_text_field($_POST['name']) );
+				$chg_name = stripslashes( sanitize_text_field($_POST['name']) );
 				$chg_day = sanitize_text_field($_POST['day']);
 				$chg_time = sanitize_text_field($_POST['start_time']);
 				$chg_end_time = sanitize_text_field($_POST['end_time']);
-				$chg_types_string = sanitize_text_field(implode(', ', array_filter( $_POST['types'] ) ) );
-				$chg_notes = sanitize_text_field($_POST['content']);
+
+				$chg_types = [];
+				$chg_types = array_merge( $_POST['types'] );
+				array_push($chg_types, $_POST['choose_meeting_type']);
+						
+				if( isset($_POST['same_gender_only_type']) && !empty($_POST['same_gender_only_type']) ) {
+					array_push($chg_types, sanitize_text_field($_POST['same_gender_only_type']));
+				}
+
+/* TODO: Remove this! 
+echo count($chg_types) . ' records';
+echo "<br>";
+var_dump($chg_types);
+echo "<br>"; 
+*/
+				$chg_in_person_meeting = sanitize_text_field($_POST['in_person']);
+				//$chg_types_string = sanitize_text_field(implode(', ', $chg_types ) );
+				$chg_notes = stripslashes( sanitize_text_field($_POST['notes_content']) );
 				$chg_conference_url = sanitize_text_field($_POST['conference_url']);
 				$chg_conference_url_notes = sanitize_text_field($_POST['conference_url_notes']);
 				$chg_conference_phone = sanitize_text_field($_POST['conference_phone']);
@@ -226,11 +244,9 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_location = stripslashes(sanitize_text_field($_POST['location']));
 				$chg_address = stripslashes( sanitize_text_field( $_POST['formatted_address'] ) );
 				$chg_region_id = sanitize_text_field($_POST['region']);
-				$chg_sub_region = sanitize_text_field($_POST['sub_region']);
 				$chg_location_notes = sanitize_text_field($_POST['location_notes'] );
 				$chg_group = stripslashes(sanitize_text_field($_POST['group']));
 				$chg_district_id = sanitize_text_field($_POST['district']);
-				$chg_sub_district = sanitize_text_field($_POST['sub_district'] );
 				$chg_group_notes = sanitize_text_field($_POST['group_notes'] );
 				$chg_website = sanitize_text_field($_POST['website_1']);
 				$chg_website_2 = sanitize_text_field($_POST['website_2']);
@@ -249,12 +265,15 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_contact_3_name = sanitize_text_field($_POST['contact_3_name']);
 				$chg_contact_3_email = sanitize_text_field($_POST['contact_3_email']);
 				$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
-
-				$m_name = str_replace("\'s", "", sanitize_text_field($meeting->post_title ));
-				$c_name = str_replace("\'s", "", sanitize_text_field($_POST['name']));
-				if ( ( strcmp( $m_name, $c_name ) !== 0) ) {
-					$message_lines[__('Meeting', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Meeting</td><td style='color:red;'>$c_name</td></tr>";  
-					$IsChange = true;
+				
+				if ( ( strcmp( $post_title, $chg_name ) !== 0) ) {
+					//for group names we only will compare alpha characters
+					$m_name = preg_replace("/[^A-Za-z ]/", '', $post_title);
+					$c_name = preg_replace("/[^A-Za-z ]/", '', $chg_name);
+					if ( $m_name != $c_name ) {
+						$message_lines[__('Meeting', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Meeting</td><td style='color:red;'>$chg_name</td></tr>";  
+						$IsChange = true;
+					} 
 				}
 
 				$chg_daytime = tsml_format_day_and_time($chg_day, $chg_time);
@@ -264,14 +283,47 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$IsChange = true;
 				}
 
-				$chg_typesDescStr = '';
-				$chg_typesDescArray = tsml_sanitize_array($_POST['types']);
-				$typesArrayHasChanged = false;
-				if (!empty($_POST['types'])){
-					//if a meeting is both open and closed, make it closed
-					if (in_array('C', $chg_typesDescArray) && in_array('O', $chg_typesDescArray)) {
-						$chg_typesDescArray = array_diff($chg_typesDescArray, array('O'));
+				if (  $chg_end_time !== $meeting->end_time )  {
+					$chg_end_time = date("g:i a",strtotime($chg_end_time));
+					$message_lines[__('End Time', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>End Time</td><td style='color:red;'>$chg_end_time</td></tr>";  
+					$IsChange = true;
+					echo 'change end time: ' . $chg_end_time . '<br />';
+					echo 'meeting end time: ' .$meeting->end_time . '<br />';
+					print_r('<br />');
+				}
+
+				if($chg_in_person_meeting != $is_in_person_meeting ) {
+					$message_lines[__('Attend in-person', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Attend in-person</td><td style='color:red;'>$chg_in_person_meeting</td></tr>";  
+					$IsChange = true;
+				}
+
+				$chg_types_has_changed = false;
+				if (!empty($meeting->types)) {
+					if (!empty($chg_types)) {
+						foreach ($chg_types as $chg_type_key) {
+							//TODO: Remove this! echo $chg_type_key . '<br />';
+							if ( !in_array($chg_type_key, $meeting->types) ) { 
+								$chg_types_has_changed = true; 
+								//TODO: Remove this! echo '<br />[<b>' . $chg_type_key . '</b>] not in original type array...<br /><br />';
+								break;
+							}
+						}
+						foreach ($meeting->types as $mtg_type_key) {
+							//TODO: Remove this! echo $mtg_type_key . '<br />';
+							if ( !in_array($mtg_type_key, $chg_typess) ) { 
+								$chg_types_has_changed = true; 
+								//TODO: Remove this! echo '<br />[<b>' . $mtg_type_key . '</b>] not in changed type array...<br /><br />';
+								break;
+							}
+						}
 					}
+				}
+
+				$chg_typesDescStr = '';
+				$typesArrayHasChanged = false;
+				if ($chg_types_has_changed){
+					$chg_typesDescArray = tsml_sanitize_array($chg_types);
+
 					foreach ($chg_typesDescArray as $mtg_key) {
 						$mtg_description = $myTypesArray[$mtg_key];
 						$chg_typesDescStr .= $mtg_description.'<br>';
@@ -279,25 +331,29 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 						if (!in_array($mtg_key, $typesDescArray)) { $typesArrayHasChanged = true; }
 					}
 				}
-				else {
-					$chg_typesDescStr = 'No Types Selected';
-				}
 
-				if ( $typesArrayHasChanged === true )  {
+				if ( $chg_types_has_changed == true )  {
 					$message_lines[__('Types', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Types</td><td style='color:red;'>$chg_typesDescStr</td></tr>";
 					$IsChange = true;
 				}
 
-				$old = explode (' ', $meeting->notes);
-				$new = explode (' ', $chg_notes);
-				if ( $old !==  $new )  {
-					// Try a 2nd comparison with white space removed
-					$m_notes = str_replace(' ', '', $meeting->notes);
-					$c_notes = str_replace(' ', '', $chg_notes);
-					if ( ( strcmp( $m_notes, $c_notes ) !== 0) ) {
-						$message_lines[__('Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Notes</td><td style='color:red;'>$chg_notes</td></tr>";  
-						$IsChange = true;
-					}
+				$mtg_notes = stripslashes( sanitize_text_field($meeting->notes) );
+				$mtg_notes = str_replace('&amp;', '&', $mtg_notes);
+				$a_array = explode (" ", $mtg_notes);
+				$b_array = explode (" ", $chg_notes);
+				$arraysAreEqual = ($a_array == $b_array);
+				if ( $arraysAreEqual != True) {
+					$message_lines[__('Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Notes</td><td style='color:red;'>$chg_notes</td></tr>";  
+					$IsChange = true;
+					/* TODO: Remove this */
+					$result = array_diff($a_array, $b_array);
+					print_r($result);
+					var_dump($result);
+					print_r('<br />');
+					var_dump($a_array);
+					print_r('<br />');
+					var_dump($b_array);
+					print_r('<br />'); 
 				}
 
 				if ( $chg_conference_url !== $meeting->conference_url ) {
@@ -323,7 +379,12 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$message_lines[__('Conference Phone Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Conference Phone Notes</td><td style='color:red;'>$chg_conference_phone_notes</td></tr>";  
 					$IsChange = true;
 				}
-
+				/* TODO: Remove this
+				if( isset($_POST['in_person']) ) {
+					array_push($_POST['types'], sanitize_text_field($_POST['in_person']));
+				}
+				*/
+				$meeting->location = str_replace('&amp;', '&', $meeting->location);
 				if (  $chg_location !== $meeting->location )  {
 					$message_lines[__('Location', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Location</td><td style='color:red;'>$chg_location</td></tr>";  
 					$IsChange = true;
@@ -341,20 +402,21 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$IsChange = true;
 				}
 
-				if ( $chg_sub_region !== $meeting->sub_region ) {
-					$message_lines[__('Sub Region', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub Region</td><td style='color:red;'>$chg_sub_region</td></tr>";  
-					$IsChange = true;
-				}
-
 				if ( $chg_location_notes !== $meeting->location_notes ) {
 					$message_lines[__('Location Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Location Notes</td><td style='color:red;'>$chg_location_notes</td></tr>";  
 					$IsChange = true;
 				}
 
 				/* Addition Group Information - when meeting is registered group with an id */
+				$meeting->group = str_replace('&#039;', "'", $meeting->group);
 				if ( ( strcmp( $meeting->group, $chg_group ) !== 0) ) {
 					$message_lines[__('Group Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Name</td><td style='color:red;'>$chg_group</td></tr>";  
 					$IsChange = true;
+					/* TODO: Remove this */
+					var_dump($meeting->group);
+					print_r('<br />');
+					var_dump($chg_group);
+					print_r('<br />');
 				}
 
 				if ( !empty( $_POST['district'] ) ) {
@@ -365,10 +427,11 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					}
 				}
 
+			/*	TODO: Remove this
 				if ($meeting->sub_district != $chg_sub_district) {
 					$message_lines[__('Sub District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub District</td><td style='color:red;'>$chg_sub_district</td></tr>";  
 					$IsChange = true;
-				}
+				} */
 
 				if ( $meeting->group_notes != $chg_group_notes) {
 					$message_lines[__('Group Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Notes</td><td style='color:red;'>$chg_group_notes</td></tr>";  
@@ -479,16 +542,36 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$new_day = sanitize_text_field($_POST['new_day']);
 			$new_time = sanitize_text_field($_POST['new_time']);
 			$new_daytime = tsml_format_day_and_time( $new_day, $new_time );
+			if( isset($_POST['new_end_time']) && !empty($_POST['new_end_time']) ) {
+				$new_end_time = date("g:i a",strtotime(sanitize_text_field($_POST['new_end_time'])));
+			}
+
+			$new_types = [];
+			$new_types = array_merge( $_POST['new_types'] );
+			array_push($new_types, $_POST['choose_new_meeting_type']);
+			
+			if( isset($_POST['new_same_gender_only_type']) && !empty($_POST['new_same_gender_only_type']) ) {
+				array_push($new_types, sanitize_text_field($_POST['new_same_gender_only_type']));
+			}
+/*
+TODO: Remove this! */
+echo count($new_types) . ' records';
+echo "<br>";
+var_dump($new_types);
+echo "<br>";
+
+			$new_in_person_meeting = sanitize_text_field($_POST['new_in_person']);
 
 			//------------------ Continue with HTML table construction ----------------------
 			$message_lines = array(
 				__('Requestor', '12-step-meeting-list-feedback-enhancement') =>  "<tr><td>Requestor</td><td>$name <a href='mailto:' $email > $email </a>;</td></tr>",
-				__('Meeting', '12-step-meeting-list-feedback-enhancement') => "<tr><td>Meeting</td><td style='color:blue;' >$new_name</td></tr>'",
+				__('Meeting', '12-step-meeting-list-feedback-enhancement') => "<tr><td>Meeting</td><td style='color:blue;' >$new_name</td></tr>",
 				__('When', '12-step-meeting-list-feedback-enhancement') => "<tr><td>When</td><td style='color:blue;' >$new_daytime</td></tr>",
+				__('End Time', '12-step-meeting-list-feedback-enhancement') => "<tr><td>End Time</td><td style='color:blue;' >$new_end_time</td></tr>",
+				__('Attend in-person', '12-step-meeting-list-feedback-enhancement') => "<tr><td>Attend in-person</td><td style='color:blue;' >$new_in_person_meeting</td></tr>",
 			);
-
-			$new_end_time = sanitize_text_field($_POST['new_end_time']);
-			$new_notes = sanitize_text_field($_POST['new_content']);
+			
+			$new_notes = sanitize_text_field($_POST['$new_notes']);
 			$new_conference_url = sanitize_text_field($_POST['new_conference_url']);
 			$new_conference_url_notes = sanitize_text_field($_POST['new_conference_url_notes']);
 			$new_conference_phone = sanitize_text_field($_POST['new_conference_phone']);
@@ -496,17 +579,14 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$new_address = stripslashes( sanitize_text_field($_POST['new_formatted_address']));
 			$new_region_id = sanitize_text_field($_POST['new_region']);
 			$new_region = get_the_category_by_ID($new_region_id);
-			$new_sub_region = sanitize_text_field($_POST['new_sub_region']);
 			$new_location_notes = sanitize_text_field($_POST['new_location_notes'] );
 			$new_group = sanitize_text_field($_POST['new_group']);
 
-			$new_typesDescArray = tsml_sanitize_array($_POST['new_types']);
-			// If Conference URL, validate; or if phone, force 'ONL' type, else remove 'ONL'
+			// If Conference URL then validate
 			if (!empty( $new_conference_url ) ) {
 				$url = esc_url_raw($new_conference_url, array('http', 'https'));
 				if (tsml_conference_provider($url)) {
 					$new_conference_url = $url;
-					$new_typesDescArray = array_values(array_diff(tsml_sanitize_array($_POST['new_types']), array('ONL')));
 				} else {
 					$new_conference_url = null;
 					$new_conference_url_notes = null;
@@ -516,27 +596,14 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 
 			// '=====================  New MTG Array   =====================================';
 			$new_typesDescStr = '';
+			if ( ( !empty( $new_types ) ) && ( is_array( $new_types ) ) ) {
 
-			if ( ( !empty( $new_typesDescArray ) ) && ( is_array( $new_typesDescArray ) ) ) {
-
-				//if a meeting is both open and closed, make it closed
-				if (in_array('C', $new_typesDescArray) && in_array('O', $new_typesDescArray)) {
-					$new_typesDescArray = array_diff($new_typesDescArray, array('O'));
-				}
-
-				foreach ( $new_typesDescArray as $mtg_key) {
+				foreach ( $new_types as $mtg_key) {
 					$mtg_description = $myTypesArray[$mtg_key];
 					$new_typesDescStr .= $mtg_description.'<br>';
 				}
 			}
-			else {
-				$new_typesDescStr = 'No Types Selected';
-			}
-
-			if ( !empty($new_end_time) ) {
-				$message_lines[__('End Time', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>End Time</td><td style='color:blue;'>$new_end_time</td></tr>";  
-			}
-			
+		
 			if ( !empty($new_typesDescStr) ) {
 				$message_lines[__('Types', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Types</td><td style='color:blue;'>$new_typesDescStr</td></tr>";
 			}
@@ -575,10 +642,6 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$message_lines[__('Region', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Region</td><td style='color:blue;'>$new_region</td></tr>";  
 			}
 
-			if ( !empty($new_sub_region) ) {
-				$message_lines[__('Sub Region', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub Region</td><td style='color:blue;'>$new_sub_region</td></tr>";  
-			}
-
 			if ( !empty($new_location_notes) ) {
 				$message_lines[__('Location Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Location Notes</td><td style='color:blue;'>$new_location_notes</td></tr>";  
 			}
@@ -588,7 +651,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			if ( 1 == 1 )  {
 
 				$new_district_id = sanitize_text_field($_POST['new_district_id']);
-				$new_sub_district = sanitize_text_field($_POST['new_sub_district'] );
+				//$new_sub_district = sanitize_text_field($_POST['new_sub_district'] );
 				$new_group_notes = sanitize_text_field($_POST['new_group_notes'] );
 				$new_website = sanitize_text_field($_POST['new_website']);
 				$new_website_2 = sanitize_text_field($_POST['new_website_2']);
@@ -618,9 +681,9 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$message_lines[__('District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>District</td><td style='color:blue' >$new_district</td></tr>";  
 				}
 
-				if (!empty($new_sub_district)) {
+			 /* if (!empty($new_sub_district)) { TODO: Remove this! 
 					$message_lines[__('Sub District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub District</td><td style='color:blue' >$new_sub_district</td></tr>";  
-				}
+				} */
 
 				if (!empty($new_group_notes)) {
 					$message_lines[__('Group Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Notes</td><td style='color:blue' >$new_group_notes</td></tr>";  
@@ -803,4 +866,10 @@ if (!function_exists('tsml_sanitize_array')) {
 		}
 	return $retArray;
 	}
+}
+
+function clean($string) {
+   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }

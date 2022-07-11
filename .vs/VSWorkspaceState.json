@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\includes",
+    "\\js",
     "\\languages",
     "\\templates"
   ],
-  "SelectedNode": "\\updater.php",
+  "SelectedNode": "\\includes\\ajax-override.php",
   "PreviewInSolutionExplorer": false
 }
