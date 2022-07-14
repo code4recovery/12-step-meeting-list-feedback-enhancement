@@ -67,7 +67,6 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$typesDescArray[$mtg_key] = $mtg_description;
 			}
 
-			//$result = condition ? value1 : value2;
 			$is_in_person_meeting = in_array('TC', @$meeting->types) || $meeting->attendance_option == 'online' || $meeting->attendance_option == 'inactive' ? 'No' : 'Yes';
 
 			$message_lines = array(
@@ -220,37 +219,38 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_time = sanitize_text_field($_POST['start_time']);
 				$chg_end_time = sanitize_text_field($_POST['end_time']);
 
-				$chg_types = [];
-				$chg_types = array_merge( $_POST['types'] );
+				if( isset($_POST['types']) ) {
+					$chg_types = array_merge( $_POST['types'] );
+				} else {
+					$chg_types = [];
+				}
+
 				array_push($chg_types, $_POST['choose_meeting_type']);
-						
+
 				if( isset($_POST['same_gender_only_type']) && !empty($_POST['same_gender_only_type']) ) {
 					array_push($chg_types, sanitize_text_field($_POST['same_gender_only_type']));
 				}
 
-/* TODO: Remove this! 
-echo count($chg_types) . ' records';
-echo "<br>";
-var_dump($chg_types);
-echo "<br>"; 
-*/
+				if( isset($_POST['in_person']) && $_POST['in_person'] === 'No' ) {
+					array_push($chg_types, 'TC');
+				}
+
 				$chg_in_person_meeting = sanitize_text_field($_POST['in_person']);
-				//$chg_types_string = sanitize_text_field(implode(', ', $chg_types ) );
 				$chg_notes = stripslashes( sanitize_text_field($_POST['notes_content']) );
 				$chg_conference_url = sanitize_text_field($_POST['conference_url']);
-				$chg_conference_url_notes = sanitize_text_field($_POST['conference_url_notes']);
+				$chg_conference_url_notes =  stripslashes(sanitize_text_field($_POST['conference_url_notes']));
 				$chg_conference_phone = sanitize_text_field($_POST['conference_phone']);
-				$chg_conference_phone_notes = sanitize_text_field($_POST['conference_phone_notes']);
+				$chg_conference_phone_notes =  stripslashes(sanitize_text_field($_POST['conference_phone_notes']));
 				$chg_location = stripslashes(sanitize_text_field($_POST['location']));
 				$chg_address = stripslashes( sanitize_text_field( $_POST['formatted_address'] ) );
 				$chg_region_id = sanitize_text_field($_POST['region']);
-				$chg_location_notes = sanitize_text_field($_POST['location_notes'] );
+				$chg_location_notes =  stripslashes(sanitize_text_field($_POST['location_notes'] ));
 				$chg_group = stripslashes(sanitize_text_field($_POST['group']));
 				$chg_district_id = sanitize_text_field($_POST['district']);
-				$chg_group_notes = sanitize_text_field($_POST['group_notes'] );
+				$chg_group_notes =  stripslashes(sanitize_text_field($_POST['group_notes'] ));
 				$chg_website = sanitize_text_field($_POST['website_1']);
 				$chg_website_2 = sanitize_text_field($_POST['website_2']);
-				$chg_email = sanitize_text_field($_POST['email']);
+				$chg_email =  stripslashes(sanitize_text_field($_POST['email']));
 				$chg_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['phone']));
 				$chg_mailing_address = stripslashes(sanitize_text_field($_POST['mailing_address']));
 				$chg_venmo = sanitize_text_field($_POST['venmo']);
@@ -287,9 +287,6 @@ echo "<br>";
 					$chg_end_time = date("g:i a",strtotime($chg_end_time));
 					$message_lines[__('End Time', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>End Time</td><td style='color:red;'>$chg_end_time</td></tr>";  
 					$IsChange = true;
-					echo 'change end time: ' . $chg_end_time . '<br />';
-					echo 'meeting end time: ' .$meeting->end_time . '<br />';
-					print_r('<br />');
 				}
 
 				if($chg_in_person_meeting != $is_in_person_meeting ) {
@@ -298,21 +295,20 @@ echo "<br>";
 				}
 
 				$chg_types_has_changed = false;
+				$bypass_array = ['ONL']; // redundant
+
 				if (!empty($meeting->types)) {
 					if (!empty($chg_types)) {
 						foreach ($chg_types as $chg_type_key) {
-							//TODO: Remove this! echo $chg_type_key . '<br />';
 							if ( !in_array($chg_type_key, $meeting->types) ) { 
 								$chg_types_has_changed = true; 
-								//TODO: Remove this! echo '<br />[<b>' . $chg_type_key . '</b>] not in original type array...<br /><br />';
 								break;
 							}
 						}
 						foreach ($meeting->types as $mtg_type_key) {
-							//TODO: Remove this! echo $mtg_type_key . '<br />';
-							if ( !in_array($mtg_type_key, $chg_typess) ) { 
+							if ( in_array($mtg_type_key, $bypass_array) ) { continue; }
+							if ( !in_array($mtg_type_key, $chg_types) ) { 
 								$chg_types_has_changed = true; 
-								//TODO: Remove this! echo '<br />[<b>' . $mtg_type_key . '</b>] not in changed type array...<br /><br />';
 								break;
 							}
 						}
@@ -339,25 +335,17 @@ echo "<br>";
 
 				$mtg_notes = stripslashes( sanitize_text_field($meeting->notes) );
 				$mtg_notes = str_replace('&amp;', '&', $mtg_notes);
+				$mtg_notes = str_replace('&#039;', "'", $mtg_notes);
 				$a_array = explode (" ", $mtg_notes);
 				$b_array = explode (" ", $chg_notes);
 				$arraysAreEqual = ($a_array == $b_array);
 				if ( $arraysAreEqual != True) {
 					$message_lines[__('Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Notes</td><td style='color:red;'>$chg_notes</td></tr>";  
 					$IsChange = true;
-					/* TODO: Remove this */
-					$result = array_diff($a_array, $b_array);
-					print_r($result);
-					var_dump($result);
-					print_r('<br />');
-					var_dump($a_array);
-					print_r('<br />');
-					var_dump($b_array);
-					print_r('<br />'); 
 				}
 
 				if ( $chg_conference_url !== $meeting->conference_url ) {
-					$message_lines[__('Conference URL', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Conference URL</td><td style='color:red;'>$chg_conference_url</td></tr>";  
+					$message_lines[__('Conference URL', '12-step-meeting-list-feedback-enhancement')] = "<tr style='color:red;'><td>Conference URL</td><td>$chg_conference_url</td></tr>";  
 					$IsChange = true;
 				}
 
@@ -379,11 +367,7 @@ echo "<br>";
 					$message_lines[__('Conference Phone Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Conference Phone Notes</td><td style='color:red;'>$chg_conference_phone_notes</td></tr>";  
 					$IsChange = true;
 				}
-				/* TODO: Remove this
-				if( isset($_POST['in_person']) ) {
-					array_push($_POST['types'], sanitize_text_field($_POST['in_person']));
-				}
-				*/
+
 				$meeting->location = str_replace('&amp;', '&', $meeting->location);
 				if (  $chg_location !== $meeting->location )  {
 					$message_lines[__('Location', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Location</td><td style='color:red;'>$chg_location</td></tr>";  
@@ -412,11 +396,6 @@ echo "<br>";
 				if ( ( strcmp( $meeting->group, $chg_group ) !== 0) ) {
 					$message_lines[__('Group Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Name</td><td style='color:red;'>$chg_group</td></tr>";  
 					$IsChange = true;
-					/* TODO: Remove this */
-					var_dump($meeting->group);
-					print_r('<br />');
-					var_dump($chg_group);
-					print_r('<br />');
 				}
 
 				if ( !empty( $_POST['district'] ) ) {
@@ -426,12 +405,6 @@ echo "<br>";
 						$IsChange = true;
 					}
 				}
-
-			/*	TODO: Remove this
-				if ($meeting->sub_district != $chg_sub_district) {
-					$message_lines[__('Sub District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub District</td><td style='color:red;'>$chg_sub_district</td></tr>";  
-					$IsChange = true;
-				} */
 
 				if ( $meeting->group_notes != $chg_group_notes) {
 					$message_lines[__('Group Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Notes</td><td style='color:red;'>$chg_group_notes</td></tr>";  
@@ -546,19 +519,17 @@ echo "<br>";
 				$new_end_time = date("g:i a",strtotime(sanitize_text_field($_POST['new_end_time'])));
 			}
 
-			$new_types = [];
-			$new_types = array_merge( $_POST['new_types'] );
+			if( isset($_POST['new_types']) ) {
+				$new_types = array_merge( $_POST['new_types'] );
+			} else {
+				$new_types = [];
+			}
+
 			array_push($new_types, $_POST['choose_new_meeting_type']);
 			
 			if( isset($_POST['new_same_gender_only_type']) && !empty($_POST['new_same_gender_only_type']) ) {
 				array_push($new_types, sanitize_text_field($_POST['new_same_gender_only_type']));
 			}
-/*
-TODO: Remove this! */
-echo count($new_types) . ' records';
-echo "<br>";
-var_dump($new_types);
-echo "<br>";
 
 			$new_in_person_meeting = sanitize_text_field($_POST['new_in_person']);
 
@@ -680,10 +651,6 @@ echo "<br>";
 				if (!empty($new_district)) {
 					$message_lines[__('District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>District</td><td style='color:blue' >$new_district</td></tr>";  
 				}
-
-			 /* if (!empty($new_sub_district)) { TODO: Remove this! 
-					$message_lines[__('Sub District', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Sub District</td><td style='color:blue' >$new_sub_district</td></tr>";  
-				} */
 
 				if (!empty($new_group_notes)) {
 					$message_lines[__('Group Notes', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Group Notes</td><td style='color:blue' >$new_group_notes</td></tr>";  
@@ -868,8 +835,3 @@ if (!function_exists('tsml_sanitize_array')) {
 	}
 }
 
-function clean($string) {
-   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-
-   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-}
