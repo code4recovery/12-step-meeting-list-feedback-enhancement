@@ -695,7 +695,7 @@ get_header();
 																	<input type="text" name="paypal" id="paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( isset($tsml_hide_contact_information)  && $tsml_hide_contact_information == false): ?>
+															<?php if( !isset($tsml_hide_contact_information)  || $tsml_hide_contact_information == false): ?>
 															<div id="div_contacts_display" >
 																<div class="meta_form_row row">
 																	<div class="col-md-12">
@@ -1064,7 +1064,7 @@ get_header();
 																	<input type="text" name="new_paypal" id="new_paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( isset($tsml_hide_contact_information)  && $tsml_hide_contact_information == false): ?>
+															<?php if( !isset($tsml_hide_contact_information) || $tsml_hide_contact_information == false): ?>
 															<div id="div_new_contacts_display" >
 																<div class="meta_form_row row">
 																	<div class="col-md-12">
