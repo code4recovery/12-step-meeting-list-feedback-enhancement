@@ -622,7 +622,6 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			if ( 1 == 1 )  {
 
 				$new_district_id = sanitize_text_field($_POST['new_district_id']);
-				//$new_sub_district = sanitize_text_field($_POST['new_sub_district'] );
 				$new_group_notes = sanitize_text_field($_POST['new_group_notes'] );
 				$new_website = sanitize_text_field($_POST['new_website']);
 				$new_website_2 = sanitize_text_field($_POST['new_website_2']);

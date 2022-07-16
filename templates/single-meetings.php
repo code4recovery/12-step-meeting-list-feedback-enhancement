@@ -588,14 +588,6 @@ get_header();
 																	'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																))?>
 															</div>		
-														<!-- <div class="well well-sm col-md-5">	
-																<label for="sub_region"><?php esc_attr_e('Sub Region', '12-step-meeting-list-feedback-enhancement')?></label><br />
-																<?php wp_dropdown_categories(array( 'child_of' =>  empty($meeting->region_id) ? null : $meeting->region_id,
-																	'name' => 'sub_region', 'taxonomy' => 'tsml_region','hierarchical' => true, 'id' => 'sub_region_id', 
-																	'hide_empty' => false, 'orderby' => 'name', 'selected' => empty($meeting->sub_region_id) ? null : $meeting->sub_region_id,
-																	'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
-																))?>
-															</div> -->
 														</div>
 														<?php }?>
 														<div class="meta_form_row row">
@@ -635,10 +627,6 @@ get_header();
 																		'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																	))?>
 																</div>		
-																<div class="well well-sm col-md-6 ">		
-																	<label for="sub_district"><?php esc_attr_e('Sub District', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																	<input type="text" name="sub_district" id="sub_district" style="width:100%;" placeholder="<?php esc_attr_e('related to District...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo 	$meeting->sub_district ?>">
-																</div>
 															</div>
 															<?php }?>
 															<div class="meta_form_row row">
@@ -1003,10 +991,6 @@ get_header();
 																		'hide_empty' => false, 'orderby' => 'name', 'selected' => empty($meeting->new_district_id) ? null : $meeting->new_district_id,
 																		'show_option_none' => esc_attr__(' ', '12-step-meeting-list-feedback-enhancement'), 
 																	))?>
-																</div>
-																<div class="well well-sm col-md-6  ">
-																	<label for="new_sub_district"><?php esc_attr_e('Sub District', '12-step-meeting-list-feedback-enhancement')?></label><br> 
-																	<input type="text" name="new_sub_district" id="new_sub_district" style="width:100%;" placeholder="<?php esc_attr_e('related to district...', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
 																</div>
 															</div>
 															<?php }?>
