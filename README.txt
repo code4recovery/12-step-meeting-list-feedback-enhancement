@@ -4,8 +4,8 @@ Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12
-Tested up to: 5.9.3
-Stable tag: 1.0.5
+Tested up to: 6.0
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,13 @@ Like the original feedback feature, this enhanced version requires a website adm
 
 Version 3.12 or later.
 
+= Is there a way to hide the Contact Information fields on the Additional Group Information portion of the form? =
+
+Add this to your (child) theme’s functions.php. 
+
+		$tsml_hide_contact_information = true;
+
+
 == Screenshots ==
 
 1. screenshot-1.png. Meeting detail page normal view with 'Request a change to this listing' button visible.
@@ -38,6 +45,19 @@ Version 3.12 or later.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.6 = 
+* Synchronize and update single-meetings with features in TSML 3.14.5 version, including attendance option.
+* Add radio button control and info graphic to manage in-person/online/hybrid/inactive attendance options. 
+* Remove sub region text field. 
+* Change free form input text boxes to receive multi-line input.
+* Move Open, Close, Men-Only, Women-Only from Types checkbox list to mutually exclusive radio buttons.
+* Add TC and ONL types to list of types excluded from Types checkbox list. 
+* Add validation for all URL type input fields.
+* Add bootstrap visibility error classes for required and validated information fields.
+* Add Meeting End Time dropdown field.
+* Move "Request for Change" button back to original position near bottom left column.
+* Make display of Additional Information Contact fields optional. Add FAQ for same here.
 
 = 1.0.5 = 
 * Add uninstall function.
