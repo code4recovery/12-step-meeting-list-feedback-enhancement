@@ -236,36 +236,8 @@ get_header();
 										$location_info .= '<p class="location-region">' . $meeting->region . '</p>';
 									}
 
-									/*echo tsml_link(
-										get_permalink($meeting->post_parent),
-										$location_info,
-										'tsml_meeting',
-										'list-group-item list-group-item-location'
-									);
-									
-									$appends = $_GET;
-									$class = 'list-group-item list-group-item-location';
-									if (array_key_exists('tsml_meeting', $appends)) {
-										unset($appends['tsml_meeting']);
-										//tsml_alert('tsml_meeting key does exist.');
-									} else { //tsml_alert('tsml_meeting key does not exist.'); }
-									$url = get_permalink($meeting->post_parent);
-									
-									if (!empty($appends)) {
-										$url .= strstr($url, '?') ? '&' : '?';
-										$url .= http_build_query($appends, '', '&amp;');
-									}
-
-									//echo $url;*/
-
-									$url = "javascript:void(0);";
-									$class = 'list-group-item list-group-item-location';
-									$mylink = '<a href="' . $url . '"';
-									if ($class) $mylink .= ' class="' . $class . '"';
-									$mylink .= '>' . $location_info . '</a>';
-
-									echo $mylink;
-
+									//disable the tsml_link for listing other meetings at this location - hopefully a temporary fix for Issue #23
+									echo "<span class='list-group-item list-group-item-location'>" . $location_info . "</span>"; 
 								}
 
 								//whether this meeting has public contact info to show
@@ -692,7 +664,7 @@ get_header();
 																	<input type="text" name="paypal" id="paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( isset($tsml_hide_contact_information) && !$tsml_hide_contact_information == true): ?>
+															<?php if( !$tsml_hide_contact_information === null ||  $tsml_hide_contact_information === false): ?>
 															<div id="div_contacts_display" >
 																<div class="meta_form_row row">
 																	<div class="col-md-12">
@@ -1152,6 +1124,7 @@ get_header();
 								</div>
 							</form>
 						<?php } ?>
+
 					</div>
 				</div>
 			</div>
