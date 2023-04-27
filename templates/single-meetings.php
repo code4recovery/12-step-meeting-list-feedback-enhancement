@@ -1,9 +1,3 @@
-<script type="text/javascript">
-    function inactive(x) {
-        x = document.getElementById(x);
-        x.value =+ " (Inactive)";
-    }
-</script>
 <?php
 tsml_assets();
 
@@ -20,17 +14,9 @@ else {
 	$meeting_name = $meeting->group;
 }
 
-/*
-if (!empty($meeting->end_time)) {
-	$myEndTime = $meeting["end_time"];
-} else {
-	$myEndTime = add_hour_to_start_time(@$meeting->time);
-}
-*/
-
 //define some vars for the map
 wp_localize_script('tsml_public', 'tsml_map', [
-	'directions' => __('Directions', '12-step-meeting-list-feedback-enhancement'),
+	'directions' => __('Directions', '12-step-meeting-list'),
 	'directions_url' => in_array('TC', $meeting->types) ? null : $meeting->directions,
 	'formatted_address' => $meeting->formatted_address,
 	'approximate' => $meeting->approximate,
@@ -75,7 +61,6 @@ function meeting_times_array() {
 }
 
 get_header();
-
 ?>
 
 <div id="tsml">
@@ -95,7 +80,7 @@ get_header();
 						<?php _e($tsml_meeting_attendance_options[$meeting->attendance_option], "12-step-meeting-list") ?>
 					</div>
 					<br />
-					<?php echo tsml_link(get_post_type_archive_link('tsml_meeting'), '<i class="glyphicon glyphicon-chevron-right"></i> ' . __('Back to Meetings', '12-step-meeting-list-feedback-enhancement'), 'tsml_meeting') ?>
+					<?php echo tsml_link(get_post_type_archive_link('tsml_meeting'), '<i class="glyphicon glyphicon-chevron-right"></i> ' . __('Back to Meetings', '12-step-meeting-list'), 'tsml_meeting') ?>
 				</div>
 
 				<div class="row">
@@ -105,7 +90,7 @@ get_header();
 							<div class="panel panel-default">
 								<a class="panel-heading tsml-directions" href="#" data-latitude="<?php echo $meeting->latitude ?>" data-longitude="<?php echo $meeting->longitude ?>" data-location="<?php echo $meeting->location ?>">
 									<h3 class="panel-title">
-										<?php _e('Get Directions', '12-step-meeting-list-feedback-enhancement') ?>
+										<?php _e('Get Directions', '12-step-meeting-list') ?>
 										<span class="panel-title-buttons">
 											<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 												<path fill-rule="evenodd" d="M9.896 2.396a.5.5 0 0 0 0 .708l2.647 2.646-2.647 2.646a.5.5 0 1 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z" />
@@ -120,13 +105,13 @@ get_header();
 						<div class="panel panel-default">
 							<ul class="list-group">
 								<li class="list-group-item meeting-info">
-									<h3 class="list-group-item-heading"><?php _e('Meeting Information', '12-step-meeting-list-feedback-enhancement') ?></h3>
+									<h3 class="list-group-item-heading"><?php _e('Meeting Information', '12-step-meeting-list') ?></h3>
 									<p class="meeting-time">
 										<?php
 										echo tsml_format_day_and_time($meeting->day, $meeting->time);
 										if (!empty($meeting->end_time)) {
 											/* translators: until */
-											echo __(' to ', '12-step-meeting-list-feedback-enhancement'), tsml_format_time($meeting->end_time);
+											echo __(' to ', '12-step-meeting-list'), tsml_format_time($meeting->end_time);
 										}
 										?>
 									</p>
@@ -163,7 +148,7 @@ get_header();
 								<?php if (!empty($meeting->conference_url) || !empty($meeting->conference_phone)) { ?>
 									<li class="list-group-item" style="padding-bottom: 0">
 										<h3 class="list-group-item-heading">
-											<?php _e('Online Meeting', '12-step-meeting-list-feedback-enhancement') ?>
+											<?php _e('Online Meeting', '12-step-meeting-list') ?>
 										</h3>
 										<?php
 										if (!empty($meeting->conference_url) && $provider = tsml_conference_provider($meeting->conference_url)) { ?>
@@ -172,7 +157,7 @@ get_header();
 													<path fill-rule="evenodd" d="M2.667 3.5c-.645 0-1.167.522-1.167 1.167v6.666c0 .645.522 1.167 1.167 1.167h6.666c.645 0 1.167-.522 1.167-1.167V4.667c0-.645-.522-1.167-1.167-1.167H2.667zM.5 4.667C.5 3.47 1.47 2.5 2.667 2.5h6.666c1.197 0 2.167.97 2.167 2.167v6.666c0 1.197-.97 2.167-2.167 2.167H2.667A2.167 2.167 0 0 1 .5 11.333V4.667z" />
 													<path fill-rule="evenodd" d="M11.25 5.65l2.768-1.605a.318.318 0 0 1 .482.263v7.384c0 .228-.26.393-.482.264l-2.767-1.605-.502.865 2.767 1.605c.859.498 1.984-.095 1.984-1.129V4.308c0-1.033-1.125-1.626-1.984-1.128L10.75 4.785l.502.865z" />
 												</svg>
-												<?php echo $provider === true ? $meeting->conference_url : sprintf(__('Join with %s', '12-step-meeting-list-feedback-enhancement'), $provider) ?>
+												<?php echo $provider === true ? $meeting->conference_url : sprintf(__('Join with %s', '12-step-meeting-list'), $provider) ?>
 											</a>
 											<?php if ($meeting->conference_url_notes) { ?>
 												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br($meeting->conference_url_notes) ?></p>
@@ -183,7 +168,7 @@ get_header();
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
 												</svg>
-												<?php _e('Join by Phone', '12-step-meeting-list-feedback-enhancement') ?>
+												<?php _e('Join by Phone', '12-step-meeting-list') ?>
 											</a>
 											<?php if ($meeting->conference_phone_notes) { ?>
 												<p style="margin: 7.5px 0 15px; color: #777; font-size: 90%;"><?php echo nl2br($meeting->conference_phone_notes) ?></p>
@@ -214,7 +199,7 @@ get_header();
 								});
 								if (count($active_services)) { ?>
 									<li class="list-group-item list-group-item-group">
-										<h3 class="list-group-item-heading"><?php _e('7th Tradition', '12-step-meeting-list-feedback-enhancement') ?></h3>
+										<h3 class="list-group-item-heading"><?php _e('7th Tradition', '12-step-meeting-list') ?></h3>
 										<?php
 										foreach ($active_services as $field) {
 											$service = $services[$field];
@@ -225,7 +210,7 @@ get_header();
 														<path fill-rule="evenodd" d="M15 5H1v8h14V5zM1 4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H1z" />
 														<path d="M13 5a2 2 0 0 0 2 2V5h-2zM3 5a2 2 0 0 1-2 2V5h2zm10 8a2 2 0 0 1 2-2v2h-2zM3 13a2 2 0 0 0-2-2v2h2zm7-4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
 													</svg>
-													<?php echo sprintf(__('Contribute with %s', '12-step-meeting-list-feedback-enhancement'), $service['name']) ?>
+													<?php echo sprintf(__('Contribute with %s', '12-step-meeting-list'), $service['name']) ?>
 												</a>
 										<?php }
 										}
@@ -238,7 +223,7 @@ get_header();
 										<h3 class="list-group-item-heading">' . $meeting->location . '</h3>';
 
 									if ($other_meetings = count($meeting->location_meetings) - 1) {
-										$location_info .= '<p class="location-other-meetings">' . sprintf(_n('%d other meeting at this location', '%d other meetings at this location', $other_meetings, '12-step-meeting-list-feedback-enhancement'), $other_meetings) . '</p>';
+										$location_info .= '<p class="location-other-meetings">' . sprintf(_n('%d other meeting at this location', '%d other meetings at this location', $other_meetings, '12-step-meeting-list'), $other_meetings) . '</p>';
 									}
 
 									$location_info .= '<p class="location-address">' . tsml_format_address($meeting->formatted_address) . '</p>';
@@ -251,12 +236,36 @@ get_header();
 										$location_info .= '<p class="location-region">' . $meeting->region . '</p>';
 									}
 
-									echo tsml_link(
+									/*echo tsml_link(
 										get_permalink($meeting->post_parent),
 										$location_info,
 										'tsml_meeting',
 										'list-group-item list-group-item-location'
 									);
+									
+									$appends = $_GET;
+									$class = 'list-group-item list-group-item-location';
+									if (array_key_exists('tsml_meeting', $appends)) {
+										unset($appends['tsml_meeting']);
+										//tsml_alert('tsml_meeting key does exist.');
+									} else { //tsml_alert('tsml_meeting key does not exist.'); }
+									$url = get_permalink($meeting->post_parent);
+									
+									if (!empty($appends)) {
+										$url .= strstr($url, '?') ? '&' : '?';
+										$url .= http_build_query($appends, '', '&amp;');
+									}
+
+									//echo $url;*/
+
+									$url = "javascript:void(0);";
+									$class = 'list-group-item list-group-item-location';
+									$mylink = '<a href="' . $url . '"';
+									if ($class) $mylink .= ' class="' . $class . '"';
+									$mylink .= '>' . $location_info . '</a>';
+
+									echo $mylink;
+
 								}
 
 								//whether this meeting has public contact info to show
@@ -266,7 +275,7 @@ get_header();
 
 								if (!empty($meeting->group) || !empty($meeting->website) || !empty($meeting->website_2) || !empty($meeting->email) || !empty($meeting->phone) || $hasContactInformation) { ?>
 									<li class="list-group-item list-group-item-group">
-										<h3 class="list-group-item-heading"><?php echo empty($meeting->group) ? __('Contact Information', '12-step-meeting-list-feedback-enhancement') : $meeting->group ?></h3>
+										<h3 class="list-group-item-heading"><?php echo empty($meeting->group) ? __('Contact Information', '12-step-meeting-list') : $meeting->group ?></h3>
 										<?php
 										if (!empty($meeting->group_notes)) { ?>
 											<section class="group-notes"><?php echo wpautop($meeting->group_notes) ?></section>
@@ -301,7 +310,7 @@ get_header();
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
 												</svg>
-												<?php _e('Group Email', '12-step-meeting-list-feedback-enhancement') ?>
+												<?php _e('Group Email', '12-step-meeting-list') ?>
 											</a>
 										<?php }
 										if (!empty($meeting->phone)) { ?>
@@ -309,18 +318,18 @@ get_header();
 												<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
 												</svg>
-												<?php _e('Group Phone', '12-step-meeting-list-feedback-enhancement') ?>
+												<?php _e('Group Phone', '12-step-meeting-list') ?>
 											</a>
 											<?php }
 										if ($hasContactInformation) {
 											for ($i = 1; $i <= TSML_GROUP_CONTACT_COUNT; $i++) {
-												$name = empty($meeting->{'contact_' . $i . '_name'}) ? sprintf(__('Contact %s', '12-step-meeting-list-feedback-enhancement'), $i) : $meeting->{'contact_' . $i . '_name'};
+												$name = empty($meeting->{'contact_' . $i . '_name'}) ? sprintf(__('Contact %s', '12-step-meeting-list'), $i) : $meeting->{'contact_' . $i . '_name'};
 												if (!empty($meeting->{'contact_' . $i . '_email'})) { ?>
 													<a href="mailto:<?php echo $meeting->{'contact_' . $i . '_email'} ?>" class="btn btn-default btn-block contact-email">
 														<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 															<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
 														</svg>
-														<?php echo sprintf(__('%s’s Email', '12-step-meeting-list-feedback-enhancement'), $name) ?>
+														<?php echo sprintf(__('%s’s Email', '12-step-meeting-list'), $name) ?>
 													</a>
 												<?php
 												}
@@ -329,7 +338,7 @@ get_header();
 														<svg class="icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 															<path fill-rule="evenodd" d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
 														</svg>
-														<?php echo sprintf(__('%s’s Phone', '12-step-meeting-list-feedback-enhancement'), $name) ?>
+														<?php echo sprintf(__('%s’s Phone', '12-step-meeting-list'), $name) ?>
 													</a>
 										<?php }
 											}
@@ -339,13 +348,13 @@ get_header();
 								<?php
 								} ?>
 								<li class="list-group-item list-group-item-updated">
-									<?php _e('Updated', '12-step-meeting-list-feedback-enhancement') ?>
+									<?php _e('Updated', '12-step-meeting-list') ?>
 									<?php the_modified_date() ?>
 								</li>
 							</ul>
 							<!-- Make toggle button & map hideable -->
 							<div style="margin:auto; align-content: right;">
-								<input id="btnToggleMap" class="btn-block " role="button" type="button" onclick="switchVisible();" value="<?php esc_attr_e('Request a change to this listing', '12-step-meeting-list-feedback-enhancement')?>" >
+								<input id="btnToggleMap" class="btn-block " role="button" type="button" onclick="switchVisible(<?php echo htmlspecialchars(json_encode($meeting->approximate), ENT_QUOTES); ?>)" value="<?php esc_attr_e('Request a change to this listing', '12-step-meeting-list-feedback-enhancement')?>" >
 							</div>
 						</div>
 					</div>
@@ -683,7 +692,7 @@ get_header();
 																	<input type="text" name="paypal" id="paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( !isset($tsml_hide_contact_information)  || $tsml_hide_contact_information == false): ?>
+															<?php if( isset($tsml_hide_contact_information) && !$tsml_hide_contact_information == true): ?>
 															<div id="div_contacts_display" >
 																<div class="meta_form_row row">
 																	<div class="col-md-12">
@@ -1048,7 +1057,7 @@ get_header();
 																	<input type="text" name="new_paypal" id="new_paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( !isset($tsml_hide_contact_information) || $tsml_hide_contact_information == false): ?>
+															<?php if( isset($tsml_hide_contact_information) && !$tsml_hide_contact_information == true): ?>
 															<div id="div_new_contacts_display" >
 																<div class="meta_form_row row">
 																	<div class="col-md-12">
