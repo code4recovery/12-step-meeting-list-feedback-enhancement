@@ -6,7 +6,7 @@ add_action("wp_ajax_tsml_feedback", "tsmlfe_ajax_feedback");
 add_action("wp_ajax_nopriv_tsml_feedback", "tsmlfe_ajax_feedback");
 if (!function_exists('tsmlfe_ajax_feedback')) {
 	function tsmlfe_ajax_feedback() {
-		global $tsml_feedback_addresses, $tsml_nonce, $tsml_programs, $tsml_program, $tsml_region;
+		global $tsml_feedback_addresses, $tsml_nonce, $tsml_programs, $tsml_program, $tsml_region, $tsml_hide_contact_information;
 		
 		$IsNew = false;
 		$IsChange = false; 
@@ -225,13 +225,15 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$chg_types = [];
 				}
 
-				array_push($chg_types, $_POST['choose_meeting_type']);
+				if( !empty($_POST['choose_meeting_type']) ) {
+					array_push($chg_types, sanitize_text_field($_POST['choose_meeting_type']));
+				}
 
-				if( isset($_POST['same_gender_only_type']) && !empty($_POST['same_gender_only_type']) ) {
+				if( !empty($_POST['same_gender_only_type']) ) {
 					array_push($chg_types, sanitize_text_field($_POST['same_gender_only_type']));
 				}
 
-				if( isset($_POST['in_person']) && $_POST['in_person'] === 'No' ) {
+				if( !empty($_POST['in_person']) && $_POST['in_person'] === 'No' ) {
 					array_push($chg_types, 'TC');
 				}
 
@@ -254,18 +256,24 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$chg_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['phone']));
 				$chg_mailing_address = stripslashes(sanitize_text_field($_POST['mailing_address']));
 				$chg_venmo = sanitize_text_field($_POST['venmo']);
-				$chg_square = sanitize_text_field($_POST['square']);
+				$chg_square = '';
+				if( !empty($_POST['square']) ) {	$chg_square = sanitize_text_field($_POST['square']); }
 				$chg_paypal = sanitize_text_field($_POST['paypal']);
-				$chg_contact_1_name = sanitize_text_field($_POST['contact_1_name']);
-				$chg_contact_1_email = sanitize_text_field($_POST['contact_1_email']);
-				$chg_contact_1_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_1_phone']));
-				$chg_contact_2_name = sanitize_text_field($_POST['contact_2_name']);
-				$chg_contact_2_email = sanitize_text_field($_POST['contact_2_email']);
-				$chg_contact_2_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_2_phone']));
-				$chg_contact_3_name = sanitize_text_field($_POST['contact_3_name']);
-				$chg_contact_3_email = sanitize_text_field($_POST['contact_3_email']);
-				$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
-				
+				if( isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { 
+					if( !empty($_POST['contact_1_name']) || !empty($_POST['contact_2_name']) || !empty($_POST['contact_3_name']) ) {	 
+						//TODO: refactor a contact_fields loop to go here. See TSML Save.php
+						$chg_contact_1_name = sanitize_text_field($_POST['contact_1_name']);
+						$chg_contact_1_email = sanitize_text_field($_POST['contact_1_email']);
+						$chg_contact_1_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_1_phone']));
+						$chg_contact_2_name = sanitize_text_field($_POST['contact_2_name']);
+						$chg_contact_2_email = sanitize_text_field($_POST['contact_2_email']);
+						$chg_contact_2_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_2_phone']));
+						$chg_contact_3_name = sanitize_text_field($_POST['contact_3_name']);
+						$chg_contact_3_email = sanitize_text_field($_POST['contact_3_email']);
+						$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
+					}
+				}
+
 				if ( ( strcmp( $post_title, $chg_name ) !== 0) ) {
 					//for group names we only will compare alpha characters
 					$m_name = preg_replace("/[^A-Za-z ]/", '', $post_title);
@@ -451,49 +459,52 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 					$IsChange = true;
 				}
 
-				if ( $meeting->contact_1_name != $chg_contact_1_name ) {
-					$message_lines[__('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Name</td><td style='color:red;'>$chg_contact_1_name</td></tr>";  
-					$IsChange = true;
-				}
+				if( isset($_POST['$chg_contact_1_name']) ) {	 
 
-				if ( $meeting->contact_1_email != $chg_contact_1_email ) {
-					$message_lines[__('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Email</td><td style='color:red;'>$chg_contact_1_email</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_1_name != $chg_contact_1_name ) {
+						$message_lines[__('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Name</td><td style='color:red;'>$chg_contact_1_name</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_1_phone != $chg_contact_1_phone ) {
-					$message_lines[__('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Phone</td><td style='color:red;'>$chg_contact_1_phone</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_1_email != $chg_contact_1_email ) {
+						$message_lines[__('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Email</td><td style='color:red;'>$chg_contact_1_email</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_2_name != $chg_contact_2_name ) {
-					$message_lines[__('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Name</td><td style='color:red;'>$chg_contact_2_name</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_1_phone != $chg_contact_1_phone ) {
+						$message_lines[__('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 1 Phone</td><td style='color:red;'>$chg_contact_1_phone</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_2_email != $chg_contact_2_email ) {
-					$message_lines[__('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Email</td><td style='color:red;'>$chg_contact_2_email</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_2_name != $chg_contact_2_name ) {
+						$message_lines[__('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Name</td><td style='color:red;'>$chg_contact_2_name</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_2_phone != $chg_contact_2_phone ) {
-					$message_lines[__('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Phone</td><td >$chg_contact_2_phone</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_2_email != $chg_contact_2_email ) {
+						$message_lines[__('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Email</td><td style='color:red;'>$chg_contact_2_email</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_3_name != $chg_contact_3_name ) {
-					$message_lines[__('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td<td style='color:red;'>Contact 3 Name</td><td style='color:red;'>$chg_contact_3_name</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_2_phone != $chg_contact_2_phone ) {
+						$message_lines[__('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 2 Phone</td><td >$chg_contact_2_phone</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_3_email != $chg_contact_3_email ) {
-					$message_lines[__('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 3 Email</td><td style='color:red;'>$chg_contact_3_email</td></tr>";  
-					$IsChange = true;
-				}
+					if ( $meeting->contact_3_name != $chg_contact_3_name ) {
+						$message_lines[__('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')] = "<tr><td<td style='color:red;'>Contact 3 Name</td><td style='color:red;'>$chg_contact_3_name</td></tr>";  
+						$IsChange = true;
+					}
 
-				if ( $meeting->contact_3_phone != $chg_contact_3_phone ) {
-					$message_lines[__('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 3 Phone</td><td style='color:red;'>$chg_contact_3_phone</td></tr>";  
-					$IsChange = true;
+					if ( $meeting->contact_3_email != $chg_contact_3_email ) {
+						$message_lines[__('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 3 Email</td><td style='color:red;'>$chg_contact_3_email</td></tr>";  
+						$IsChange = true;
+					}
+
+					if ( $meeting->contact_3_phone != $chg_contact_3_phone ) {
+						$message_lines[__('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')] = "<tr><td>Contact 3 Phone</td><td style='color:red;'>$chg_contact_3_phone</td></tr>";  
+						$IsChange = true;
+					}
 				}
 
 				if ( !$IsChange ) {
@@ -510,7 +521,7 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 			$message .= "<table border='1' style='width:600px;'><tbody>";
 
 			$new_name = stripslashes(sanitize_text_field($_POST['new_name']));
-			$meeting  = tsml_get_meeting();
+			$meeting = get_post(0); //fix for issue #25
 			$permalink = get_permalink($meeting->ID);
 			$new_day = sanitize_text_field($_POST['new_day']);
 			$new_time = sanitize_text_field($_POST['new_time']);
@@ -631,15 +642,18 @@ if (!function_exists('tsmlfe_ajax_feedback')) {
 				$new_venmo = sanitize_text_field($_POST['new_venmo']);
 				$new_square = sanitize_text_field($_POST['new_square']);
 				$new_paypal = sanitize_text_field($_POST['new_paypal']);
-				$new_contact_1_name = sanitize_text_field($_POST['new_contact_1_name']);
-				$new_contact_1_email = sanitize_text_field($_POST['new_contact_1_email']);
-				$chg_contact_1_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_1_phone']));
-				$new_contact_2_name = sanitize_text_field($_POST['new_contact_2_name']);
-				$new_contact_2_email = sanitize_text_field($_POST['new_contact_2_email']);
-				$chg_contact_2_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_2_phone']));
-				$new_contact_3_name = sanitize_text_field($_POST['new_contact_3_name']);
-				$new_contact_3_email = sanitize_text_field($_POST['new_contact_3_email']);
-				$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
+
+				if( isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { 
+					$new_contact_1_name = sanitize_text_field($_POST['new_contact_1_name']);
+					$new_contact_1_email = sanitize_text_field($_POST['new_contact_1_email']);
+					$chg_contact_1_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_1_phone']));
+					$new_contact_2_name = sanitize_text_field($_POST['new_contact_2_name']);
+					$new_contact_2_email = sanitize_text_field($_POST['new_contact_2_email']);
+					$chg_contact_2_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_2_phone']));
+					$new_contact_3_name = sanitize_text_field($_POST['new_contact_3_name']);
+					$new_contact_3_email = sanitize_text_field($_POST['new_contact_3_email']);
+					$chg_contact_3_phone = preg_replace('/[^[:digit:]]/', '', sanitize_text_field($_POST['contact_3_phone']));
+				}
 
 				if ( !empty($new_district_id) ) {
 					$new_district_name = '';

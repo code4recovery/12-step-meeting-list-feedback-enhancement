@@ -4,8 +4,8 @@ Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12
-Tested up to: 6.1
-Stable tag: 1.0.6
+Tested up to: 6.2.2
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,11 +30,11 @@ Like the original feedback feature, this enhanced version requires a website adm
 
 Version 3.12 or later.
 
-= Is there a way to hide the Contact Information fields on the Additional Group Information portion of the form? =
+= Is there a way to un-hide the Contact Information fields on the Additional Group Information portion of the form? =
 
 Add this to your (child) theme’s functions.php. 
 
-		$tsml_hide_contact_information = true;
+		$tsml_hide_contact_information = false;
 
 
 == Screenshots ==
@@ -45,6 +45,12 @@ Add this to your (child) theme’s functions.php.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.7 = 
+* Synchronize and update single-meetings.php with corresponding file in TSML 3.14.15 version.
+* Set display of Additional Information Contact fields default to hidden. Change FAQ to reflect this change. https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/26
+* Disable link to 'Meetings at this Location' feature. https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/23
+* Disable double click on Change Request button for approximate locations. Fix bug displaying empty div below map. https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/19
 
 = 1.0.6 = 
 * Synchronize and update single-meetings with features in TSML 3.14.5 version, including attendance option.
