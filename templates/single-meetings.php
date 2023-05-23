@@ -1,7 +1,17 @@
 <?php
 tsml_assets();
-
 global $tsml_hide_contact_information;
+/*$tsml_contact_display = get_option('tsml_contact_display', 'private');
+if ($tsml_contact_display === 'private') {
+	$tsml_hide_contact_information = true;
+} else {
+	$tsml_hide_contact_information = false;
+}
+function set_contact_visibility() {
+if (empty($GLOBALS['tsml_hide_contact_information']) )
+
+  $GLOBALS['tsml_hide_contact_information'] = true;
+}*/
 $meeting = tsml_get_meeting();
 $tsml_feedback_method = 'enhanced';
 
@@ -133,12 +143,12 @@ get_header();
 										<?php foreach ($meeting->types_expanded as $type) { ?>
 											<li>
 												<?php echo $li_marker;
-												_e($type, '12-step-meeting-list'); ?>
+												_e($type, '12-step-meeting-list-feedback-enhancement'); ?>
 											</li>
 										<?php } ?>
 									</ul>
 									<?php if (!empty($meeting->type_description)) { ?>
-										<p class="meeting-type-description"><?php _e($meeting->type_description, '12-step-meeting-list') ?></p>
+										<p class="meeting-type-description"><?php _e($meeting->type_description, '12-step-meeting-list-feedback-enhancement') ?></p>
 									<?php }
 
 									if (!empty($meeting->notes)) { ?>
@@ -536,13 +546,13 @@ get_header();
 
 														<div class="meta_form_row row">
 															<div class="location_error form_not_valid hidden">
-																<?php _e('Error: In person meetings must have a specific address.', '12-step-meeting-list') ?>
+																<?php _e('Error: In person meetings must have a specific address.', '12-step-meeting-list-feedback-enhancement') ?>
 															</div>
 															<div class="location_warning need_approximate_address hidden">
-																<?php _e('Warning: Online meetings with a specific address will appear that the location temporarily closed. Meetings that are Online only should use appoximate addresses.', '12-step-meeting-list') ?><br /><br />
-																<?php _e('Example:', '12-step-meeting-list') ?><br />
-																<?php _e('Location: Online-Philadelphia', '12-step-meeting-list') ?><br />
-																<?php _e('Address: Philadelphia, PA, USA', '12-step-meeting-list') ?>
+																<?php _e('Warning: Online meetings with a specific address will appear that the location temporarily closed. Meetings that are Online only should use appoximate addresses.', '12-step-meeting-list-feedback-enhancement') ?><br /><br />
+																<?php _e('Example:', '12-step-meeting-list-feedback-enhancement') ?><br />
+																<?php _e('Location: Online-Philadelphia', '12-step-meeting-list-feedback-enhancement') ?><br />
+																<?php _e('Address: Philadelphia, PA, USA', '12-step-meeting-list-feedback-enhancement') ?>
 															</div>
 														</div>
 
@@ -664,70 +674,72 @@ get_header();
 																	<input type="text" name="paypal" id="paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( !$tsml_hide_contact_information === null ||  $tsml_hide_contact_information === false): ?>
-															<div id="div_contacts_display" >
-																<div class="meta_form_row row">
-																	<div class="col-md-12">
-																		<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement')?></h4>
-																		<p><?php echo '' ?></p>
+															
+															<?php if( isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { ?>
+																<div id="div_contacts_display" >
+																	<div class="meta_form_row row">
+																		<div class="col-md-12">
+																			<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement')?></h4>
+																			<p><?php echo '' ?></p>
+																		</div>
+																	</div>
+                                  
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_1_name" id="contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_1_name ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_1_email" id="contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_1_email ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_1_phone" id="contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_1_phone) ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_2_name" id="contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_2_name ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_2_email" id="contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_2_email ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_2_phone" id="contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_2_phone) ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_3_name" id="contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_3_name ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_3_email" id="contact_3_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_3_email ?>" >
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="contact_3_phone" id="contact_3_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_3_phone) ?>" >
+																		</div>
 																	</div>
 																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_1_name" id="contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_1_name ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_1_email" id="contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_1_email ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_1_phone" id="contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_1_phone) ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_2_name" id="contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_2_name ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_2_email" id="contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_2_email ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_2_phone" id="contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_2_phone) ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_3_name" id="contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_3_name ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_3_email" id="contact_3_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->contact_3_email ?>" >
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="contact_3_phone" id="contact_3_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo esc_attr($meeting->contact_3_phone) ?>" >
-																	</div>
-																</div>
-															</div>
-															<?php endif; ?>
+															<?php } ?>
 														</div>
 														<!-- ---------------------------- Group Information Ends ------------------------------------------- -->
 													</div>
@@ -899,13 +911,13 @@ get_header();
 
 														<div class="meta_form_row row">
 															<div class="location_error form_not_valid hidden">
-																<?php _e('Error: In person meetings must have a specific address.', '12-step-meeting-list') ?>
+																<?php _e('Error: In person meetings must have a specific address.', '12-step-meeting-list-feedback-enhancement') ?>
 															</div>
 															<div class="location_warning need_approximate_address hidden">
-																<?php _e('Warning: Online meetings with a specific address will appear that the location temporarily closed. Meetings that are Online only should use appoximate addresses.', '12-step-meeting-list') ?><br /><br />
-																<?php _e('Example:', '12-step-meeting-list') ?><br />
-																<?php _e('Location: Online-Philadelphia', '12-step-meeting-list') ?><br />
-																<?php _e('Address: Philadelphia, PA, USA', '12-step-meeting-list') ?>
+																<?php _e('Warning: Online meetings with a specific address will appear that the location temporarily closed. Meetings that are Online only should use appoximate addresses.', '12-step-meeting-list-feedback-enhancement') ?><br /><br />
+																<?php _e('Example:', '12-step-meeting-list-feedback-enhancement') ?><br />
+																<?php _e('Location: Online-Philadelphia', '12-step-meeting-list-feedback-enhancement') ?><br />
+																<?php _e('Address: Philadelphia, PA, USA', '12-step-meeting-list-feedback-enhancement') ?>
 															</div>
 														</div>
 														<div class="meta_form_row row">
@@ -1029,70 +1041,71 @@ get_header();
 																	<input type="text" name="new_paypal" id="new_paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo $meeting->paypal ?>">
 																</div>
 															</div>
-															<?php if( isset($tsml_hide_contact_information) && !$tsml_hide_contact_information == true): ?>
-															<div id="div_new_contacts_display" >
-																<div class="meta_form_row row">
-																	<div class="col-md-12">
-																		<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement')?></h4>
-																		<p><?php echo '' ?></p>
+
+															<?php if( isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { ?>
+																<div id="div_new_contacts_display" >
+																	<div class="meta_form_row row">
+																		<div class="col-md-12">
+																			<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement')?></h4>
+																			<p><?php echo '' ?></p>
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1" >
+																			<label for="new_contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_1_name" id="new_contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row"  >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_1_email" id="new_contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_2_name" id="new_contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_2_email" id="new_contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_3_name" id="new_contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row"  >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_3_email" id="new_contact_3_email" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
+																	</div>
+																	<div class="meta_form_row row" >
+																		<div class="well well-sm col-md-10 col-md-offset-1 ">
+																			<label for="new_contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
+																			<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
+																		</div>
 																	</div>
 																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1" >
-																		<label for="new_contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_1_name" id="new_contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row"  >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_1_email" id="new_contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_2_name" id="new_contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_2_email" id="new_contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_3_name" id="new_contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row"  >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_3_email" id="new_contact_3_email" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-																<div class="meta_form_row row" >
-																	<div class="well well-sm col-md-10 col-md-offset-1 ">
-																		<label for="new_contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement')?></label><br>
-																		<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement')?>" value="<?php echo '' ?>">
-																	</div>
-																</div>
-															</div>
-															<?php endif; ?>
+															<?php } ?>
 														</div>
 														<!-- -------------------------- New Group Information Ends ------------------------------------------- -->
 													</div> 

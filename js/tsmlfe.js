@@ -6,14 +6,14 @@ function switchVisible(approximate) {
 	var map_container = document.getElementById('map');
 	var requests_container = document.getElementById('requests');
 
-	if (map_container.style.display == 'none') {
+	if (map_container.style.display === 'none') {
 		if (approximate == 'no') {
 			map_container.style.display = 'block';
-		}
+		} 
 		requests_container.style.display = 'none';
 	}
-	else {
-		if (approximate == 'no') {
+	else  {
+		if (approximate === 'no') {
 			map_container.style.display = 'none';
 		}
 		requests_container.style.display = 'block';
@@ -80,5 +80,5 @@ function toggleAdditionalInfoDisplay(x, y) {
 
 function inactive(x) {
 	x = document.getElementById(x);
-	x.value = + " (Inactive)";
+	x.value += " (Inactive)";
 }
