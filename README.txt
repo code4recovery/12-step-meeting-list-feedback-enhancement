@@ -5,7 +5,7 @@ Requires at least: 3.2
 Requires PHP: 5.6
 Requires 12 Step Meeting List Version: 3.12
 Tested up to: 6.5
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,10 @@ Add this to your (child) theme’s functions.php.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.8 = 
+* Synchronize single-meetings with corresponding file in TSML 3.15 version to fix block theme header/footer bug.
+* Connect Settings page 'Contact Visibility' option to the Contact fields override variable. 
 
 = 1.0.7 = 
 * Synchronize and update single-meetings.php with corresponding file in TSML 3.14.15 version.

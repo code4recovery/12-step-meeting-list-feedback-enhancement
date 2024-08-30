@@ -3,14 +3,14 @@
  * Plugin Name: 12 Step Meeting List Feedback Enhancement
  * Plugin URI: https://wordpress.org/plugins/12-step-meeting-list-feedback-enhancement/
  * Description: This '12 Step Meeting List' plugin add-on enhances the feedback feature found on the meetings detail page. It provides a formatted solution to guide user feedback, giving a consistent, auditable, and accurate view of what the feedback submitter is wanting added, changed, or removed in the 12 Step Meeting List. 
- * Version: 1.0.7
+ * Version: 1.0.8
  * Requires PHP: 5.6
  * Requires 12 Step Meeting List Version: 3.12
- * Tested up to: 6.2.2
+ * Tested up to: 6.6
  * Author: Code for Recovery
  * Author URI: https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement
  * Text Domain: 12-step-meeting-list-feedback-enhancement
- * Updated: May 22, 2023
+ * Updated: August 30, 2024
  */
 
  //define constants
@@ -19,7 +19,7 @@ if (!defined('TSMLFE_CONTACT_EMAIL')) {
 }
 
 if (!defined('TSMLFE_VERSION')) {
-    define('TSMLFE_VERSION', '1.0.7');
+    define('TSMLFE_VERSION', '1.0.8');
 }
 
 if (!defined('TSMLFE_PLUGIN_DIR')) {
