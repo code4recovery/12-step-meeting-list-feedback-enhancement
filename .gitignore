@@ -10,3 +10,4 @@ docker-compose.yml
 ProjectSettings.json
 VSWorkspaceState.json
 .vs
+/.vs/slnx.sqlite
