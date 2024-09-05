@@ -1,5 +1,5 @@
 === 12 Step Meeting List Feedback Enhancement ===
-Contributors: Code for Recovery
+Contributors: code4recovery
 Donate link: https://code4recovery.org/donate
 Requires at least: 3.2
 Requires PHP: 5.6
