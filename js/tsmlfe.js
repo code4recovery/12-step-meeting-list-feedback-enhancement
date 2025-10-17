@@ -4,21 +4,24 @@
 
 function switchVisible(approximate) {
 	var map_container = document.getElementById('map');
+	var online_container = document.getElementById('online');
 	var requests_container = document.getElementById('requests');
 
-
-	if (map_container.style.display === 'none') {
+	if (requests_container.style.display === 'none') {
 		if (approximate == 'no') {
-			map_container.style.display = 'block';
-		} 
-		requests_container.style.display = 'none';
-	}
-	else  {
-		if (approximate === 'no') {
 			map_container.style.display = 'none';
+		} else {
+			online_container.style.display = 'none';
 		}
 		requests_container.style.display = 'block';
-
+	}
+	else {
+		if (approximate == 'no') {
+			map_container.style.display = 'block';
+		} else {
+			online_container.style.display = 'block';
+		}
+		requests_container.style.display = 'none';
 	}
 }
 
@@ -78,9 +81,4 @@ function toggleAdditionalInfoDisplay(x, y) {
 	else {
 		x.style.display = "none";
 	}
-}
-
-function inactive(x) {
-	x = document.getElementById(x);
-	x.value += " (Inactive)";
 }

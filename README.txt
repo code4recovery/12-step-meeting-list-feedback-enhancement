@@ -1,11 +1,11 @@
 === 12 Step Meeting List Feedback Enhancement ===
-Contributors: code4recovery
+Contributors: developer@code4recovery.org, waynep@code4recovery.org
 Donate link: https://code4recovery.org/donate
-Requires at least: 3.2
+Requires at least: 6.5
 Requires PHP: 5.6
-Requires 12 Step Meeting List Version: 3.12
-Tested up to: 6.5
-Stable tag: 1.0.8
+Requires 12 Step Meeting List Version: 3.19
+Tested up to: WordPress 6.8.3
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,14 +28,11 @@ Like the original feedback feature, this enhanced version requires a website adm
 
 = What version of the 12 Step Meeting List plugin is required? =
 
-Version 3.12 or later.
+Version 3.19 or later.
 
-= Is there a way to un-hide the Contact Information fields on the Additional Group Information portion of the form? =
+= Is there a way to un-hide the hidden Contact Information fields on the Additional Group Information portion of the form? =
 
-Add this to your (child) theme’s functions.php. 
-
-		$tsml_hide_contact_information = false;
-
+On the Meetings/Settings admin page set the Contact Visibility dropdown to Public. 
 
 == Screenshots ==
 
@@ -45,6 +42,13 @@ Add this to your (child) theme’s functions.php.
 1. screenshot-4.png. Example of an enhanced 'Meeting Change Request' feedback email.
 
 == Changelog ==
+
+= 1.0.9 = 
+* Synchronize single-meetings with corresponding file in TSML 3.19.3 version to resolve no display bug: https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/35
+* Updated bootstrap code to version 5. https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/36
+* Applied necessary changes to tsmife.js to gracefully handle the new online image in the single-meetings file. https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/37
+* Tested against WordPress version 6.8.3. Resolved upgrade issue: https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/34
+* Added contributor email addresses to resolve Invalid Contributor Warning: https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement/issues/32  
 
 = 1.0.8 = 
 * Synchronize single-meetings with corresponding file in TSML 3.15 version to fix block theme header/footer bug.
