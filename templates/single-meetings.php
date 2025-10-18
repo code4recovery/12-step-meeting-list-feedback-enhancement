@@ -557,7 +557,6 @@ tsml_header();
 												<div class="well well-sm row">
 													<div class="list-group-item-info">
 														<h4><?php esc_attr_e('Location Details', '12-step-meeting-list-feedback-enhancement') ?></h4>
-														<p><?php echo '' ?></p>
 													</div>
 												</div>
 
@@ -712,67 +711,69 @@ tsml_header();
 															<input type="text" name="paypal" id="paypal" style="width:100%;" placeholder="<?php esc_attr_e('PayPalUsername - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->paypal ?>">
 														</div>
 													</div>
+													<div class="row  mb-4"></div>
 
 													<?php if (isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { ?>
+													<div class="well well-sm row">
+														<div class="col-sm-offset-1 list-group-item-info">
+															<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement') ?></h4>
+														</div>
+													</div>
 													<div id="div_contacts_display">
 														<div class="well well-sm row">
-															<div class="col-md-10">
-																<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement') ?></h4>
-																<p><?php echo '' ?></p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+															<div class="col-sm-offset-1">
 																<label for="contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_1_name" id="contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_1_name ?>">
+																<input type="text" name="contact_1_name" id="contact_1_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_1_name ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_1_email" id="contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_1_email ?>">
+																<input type="text" name="contact_1_email" id="contact_1_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_1_email ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_1_phone" id="contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_1_phone) ?>">
+																<input type="text" name="contact_1_phone" id="contact_1_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_1_phone) ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_2_name" id="contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_2_name ?>">
+																<input type="text" name="contact_2_name" id="contact_2_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_2_name ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_2_email" id="contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_2_email ?>">
+																<input type="text" name="contact_2_email" id="contact_2_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_2_email ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_2_phone" id="contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_2_phone) ?>">
+																<input type="text" name="contact_2_phone" id="contact_2_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_2_phone) ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_3_name" id="contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_3_name ?>">
+																<input type="text" name="contact_1_name" id="contact_3_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_3_name ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_3_email" id="contact_3_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_3_email ?>">
+																<input type="text" name="contact_3_email" id="contact_3_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->contact_3_email ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="contact_3_phone" id="contact_3_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_3_phone) ?>">
+																<input type="text" name="contact_3_phone" id="contact_3_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo esc_attr($meeting->contact_3_phone) ?>">
 															</div>
 														</div>
 													</div>
@@ -1001,10 +1002,6 @@ tsml_header();
 														</h4>
 													</div>
 												</div>
-												<div class="row ">
-													<div class="col-md-11 col-md-offset-1 radio">
-													</div>
-												</div>
 
 												<!-- --------------------------------- Additional Group Information Starts ----------------------------------------- -->
 
@@ -1073,7 +1070,7 @@ tsml_header();
 														</div>
 													</div>
 													<div class="well well-sm row">
-														<div class="col-md-offset-1 ">
+														<div class="col-md-offset-1">
 															<label for="new_square"><?php esc_attr_e('Square', '12-step-meeting-list-feedback-enhancement') ?></label><br>
 															<input type="text" name="new_square" id="new_square" style="width:100%;" placeholder="<?php esc_attr_e('$Cashtag - handle for 7th Tradition contributions', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo $meeting->square ?>">
 														</div>
@@ -1085,68 +1082,71 @@ tsml_header();
 														</div>
 													</div>
 													<?php if (isset($tsml_hide_contact_information) && $tsml_hide_contact_information !== true) { ?>
-													<div id="div_new_contacts_display">
+
+													<div class="well well-sm row">
+														<div class="col-sm-offset-1 list-group-item-info">
+															<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement') ?></h4>
+														</div>
+													</div>
+													<div id="div_contacts_display">
 														<div class="well well-sm row">
-															<div class="col-md-10">
-																<h4><?php esc_attr_e('Contact Information', '12-step-meeting-list-feedback-enhancement') ?></h4>
-																<p><?php echo '' ?></p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-offset-1">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_1_name"><?php esc_attr_e('Contact 1 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_1_name" id="new_contact_1_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_1_name" id="new_contact_1_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_1_email"><?php esc_attr_e('Contact 1 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_1_email" id="new_contact_1_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_1_email" id="new_contact_1_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_1_phone"><?php esc_attr_e('Contact 1 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_1_phone" id="new_contact_1_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
-																<label for="new_contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_2_name" id="new_contact_2_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
+																<label for="contact_2_name"><?php esc_attr_e('Contact 2 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
+																<input type="text" name="contact_2_name" id="contact_2_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_2_email"><?php esc_attr_e('Contact 2 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_2_email" id="new_contact_2_email" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_2_email" id="new_contact_2_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_2_phone"><?php esc_attr_e('Contact 2 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_2_phone" id="new_contact_2_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_3_name"><?php esc_attr_e('Contact 3 Name', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_3_name" id="new_contact_3_name" style="width:100%;" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_1_name" id="new_contact_3_name" placeholder="<?php esc_attr_e('First Name & Last Initial', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_3_email"><?php esc_attr_e('Contact 3 Email', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_3_email" id="new_contact_3_email" style="width:100%;" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_3_email" id="new_contact_3_email" class="form-control is-valid" placeholder="<?php esc_attr_e('Email address for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-offset-1 ">
+														<div class="well well-sm row mb-4">
+															<div class="col-sm-offset-1">
 																<label for="new_contact_3_phone"><?php esc_attr_e('Contact 3 Phone', '12-step-meeting-list-feedback-enhancement') ?></label><br>
-																<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" class="form-control is-valid" style="width:100%;" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
+																<input type="text" name="new_contact_3_phone" id="new_contact_3_phone" placeholder="<?php esc_attr_e('10 digit number for a group contact', '12-step-meeting-list-feedback-enhancement') ?>" value="<?php echo '' ?>">
 															</div>
 														</div>
 													</div>
+
 													<?php } ?>
 												</div>
 												<!-- -------------------------- New Group Information Ends ------------------------------------------- -->
