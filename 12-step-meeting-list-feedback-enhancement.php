@@ -7,7 +7,7 @@
  * Requires PHP: 5.6
  * Requires 12 Step Meeting List Version: 3.12
  * Tested up to: 6.8.3
- * Author: developer@code4recovery.org
+ * Author: Code For Recovery
  * Author URI: https://github.com/code4recovery/12-step-meeting-list-feedback-enhancement
  * Text Domain: 12-step-meeting-list-feedback-enhancement
  * Updated: October 17, 2025
